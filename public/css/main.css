@@ -4,46 +4,55 @@
 }
 header{
     color: white;
-    margin-left: 2.5em;
-    font-size: 1.2em;
+    margin-left: 1.5vw;
+    font-size: 6vh;
 }
 form{
     background-color: white;
     width: 25vw;
     height: 60vh;
-    margin: 10px auto;
+    margin: 10vh auto;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
-    border: 2px solid gray;
-    border-radius: 1em;
+    border: 1px solid gray;
+    border-radius: 1vw;
 }
 form input{
     width: 20vw;
     height: 5vh;
-    margin: 15px;
+    margin: 1vw;
     background-color: azure;
     border: none;
-    font-size: 1em;
+    font-size: 1vw;
 }
 form button{
     width: 20vw;
     height: 7vh;
-    margin: 25px; 
+    margin: 2vh; 
     border-color: white;
-    border-radius: 2em; 
+    border-radius: 1vw;
     color: white;
-    font-size: 1.5em;
-    box-shadow: 1px 1px 10px gray;
+    font-size: 2vw;
+        box-shadow: 1px 1px 10px gray;
 }
 form button:hover{
     background-color: white;
     color: aquamarine;
     border-color: aquamarine;
 }
-form h5{
+form p{
     background-color: white;
-    font-size: 1.5em;
+    font-size: 2vw;
+    margin-top: 4vh;
+    margin-bottom: 1vh;
+}
+#error{
+    color:red;
+    font-size: 2vh;
+    margin: 0;
+    background-color: white;
+    text-align: center;
 }

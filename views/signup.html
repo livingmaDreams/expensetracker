@@ -5,21 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day to Day Expenses</title>
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
     <header>
-        <h1>Day to Day Expenses</h1>
+        <p>Day to Day Expenses</p>
     </header>
-    <body>  
         <form id="form" onsubmit="signup(event)">
-            <h5>SIGN UP</h5>
+            <p>SIGN UP</p>
+            <input type="text" style="display:none;" name="error" id="error" value="*User already exists*">
             <input type="text" name="name" id="name" placeholder="Name">
             <input type="text" name="mail" id="mail" placeholder="Email Address">
             <input type="password" name="password" id="password" placeholder="Password">
-            <button>SIGN UP</button>
+            <button id="sign-up">SIGN UP</button>
         </form>
-    </body>
-    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+        <script src="/js/main.js"></script>
 </body>
 </html>
