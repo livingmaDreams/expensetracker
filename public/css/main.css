@@ -1,0 +1,49 @@
+*{
+    background-color:aquamarine; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+header{
+    color: white;
+    margin-left: 2.5em;
+    font-size: 1.2em;
+}
+form{
+    background-color: white;
+    width: 25vw;
+    height: 60vh;
+    margin: 10px auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: 2px solid gray;
+    border-radius: 1em;
+}
+form input{
+    width: 20vw;
+    height: 5vh;
+    margin: 15px;
+    background-color: azure;
+    border: none;
+    font-size: 1em;
+}
+form button{
+    width: 20vw;
+    height: 7vh;
+    margin: 25px; 
+    border-color: white;
+    border-radius: 2em; 
+    color: white;
+    font-size: 1.5em;
+    box-shadow: 1px 1px 10px gray;
+}
+form button:hover{
+    background-color: white;
+    color: aquamarine;
+    border-color: aquamarine;
+}
+form h5{
+    background-color: white;
+    font-size: 1.5em;
+}
