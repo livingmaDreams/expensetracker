@@ -36,13 +36,13 @@ function login(event){
     const obj = {mail,password};
     axios.post('http://localhost:3000/login',obj)
     .then(res => {
-       if(res.data.status == 'usernotfound'){
-        error.value="*User not exists*"
+       if(res.status == 404){
+        error.value="*User not found*"
         error.style.display = 'block';
-       } else if(res.data.status == 'wrongpassword'){
+       } else if(res.status == 401){
         error.value="*Wrong password*"
         error.style.display = 'block';
-       } else if(res.data.status == 'userfound'){
+       } else if(res.status == 200){
         console.log(res.data.status,res.data.name)
        }
        setTimeout(()=>{
