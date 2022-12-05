@@ -32,3 +32,23 @@ catch(err){
     res.status(500).json({status:'failure'});
 }
 }
+
+exports.getLoginPage = (req,res,next) =>{
+    if(req.originalUrl == '/login')
+    res.sendFile(path.join(__dirname,`../views${req.originalUrl}.html`));
+}
+
+exports.loginUser = async (req,res,next) =>{
+    const mail = req.body.mail;
+    const password = req.body.password;
+    try{
+        const data = await User.findAll({where:{mail:mail}});
+          if(data[0].password === password)
+          res.status(200).json({status:'userfound',name:data[0].name});
+          else
+          res.status(200).json({status:'wrongpassword'})     
+      }
+    catch(err){
+        res.status(200).json({status:'usernotfound'})
+    }
+}

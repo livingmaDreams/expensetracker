@@ -11,14 +11,12 @@
     <header>
         <p>Day to Day Expenses</p>
     </header>
-    <a href="http://localhost:3000/login" id="login">LOGIN</a>
-        <form id="form-signuppage" onsubmit="signup(event)">
-            <p>SIGN UP</p>
+        <form class="form-loginpage" onsubmit="login(event)">
+            <p>LOGIN</p>
             <input type="text" style="display:none;" name="error" id="error">
-            <input type="text" name="name" id="name" placeholder="Name">
             <input type="text" name="mail" id="mail" placeholder="Email Address">
             <input type="password" name="password" id="password" placeholder="Password">
-            <button id="sign-up">SIGN UP</button>
+            <button id="login-page">SIGN IN</button>
         </form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
         <script src="/js/main.js"></script>
