@@ -35,8 +35,8 @@ form button{
     border-color: white;
     border-radius: 1vw;
     color: white;
-    font-size: 2vw;
-        box-shadow: 1px 1px 10px gray;
+    font-size: 1.5vw;
+    box-shadow: 1px 1px 10px gray;
 }
 form button:hover{
     background-color: white;
@@ -52,7 +52,7 @@ form button:hover{
     border-radius: 1vw;
     background-color: white;
     color: aquamarine;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
      box-shadow: 1px 1px 10px gray;
      position: absolute;
      top:2%;

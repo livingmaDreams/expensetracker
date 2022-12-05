@@ -12,9 +12,7 @@ function signup(event){
          {
             error.value="*User already exists*"
             error.style.display = 'block';
-           setTimeout(()=>{
-            error.style.display = 'none';
-           },2000);
+          
          }else if(res.status == 201){
             error.value="*NewUser created successfully*"
             error.style.display = 'block';
@@ -23,6 +21,9 @@ function signup(event){
             document.getElementById('mail').value='';
             document.getElementById('password').value='';
          }
+         setTimeout(()=>{
+            error.style.display = 'none';
+           },2000);
     })
     .catch(err => console.log(err));
 }
@@ -36,20 +37,20 @@ function login(event){
     const obj = {mail,password};
     axios.post('http://localhost:3000/login',obj)
     .then(res => {
-       if(res.status == 404){
+       if(res.data.status == 'usernotfound'){
         error.value="*User not found*"
         error.style.display = 'block';
-       } else if(res.status == 401){
+       } else if(res.data.status == 'wrongpassword'){
         error.value="*Wrong password*"
         error.style.display = 'block';
-       } else if(res.status == 200){
+       } else if(res.data.status == 'userfound'){
         console.log(res.data.status,res.data.name)
        }
+       document.getElementById('mail').value='';
+       document.getElementById('password').value='';
        setTimeout(()=>{
         error.style.display = 'none';
        },2000);
-       document.getElementById('mail').value='';
-       document.getElementById('password').value='';
-           })
+     })
     .catch(err => console.log(err));
 }
