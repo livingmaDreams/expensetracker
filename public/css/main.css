@@ -2,7 +2,7 @@
     background-color:aquamarine; 
     font-family: Arial, Helvetica, sans-serif;
 }
-header{
+header p{
     color: white;
     margin-left: 1.5vw;
     font-size: 6vh;
@@ -20,7 +20,7 @@ form{
     border: 1px solid gray;
     border-radius: 1vw;
 }
-form input{
+form input,form select,form option{
     width: 20vw;
     height: 5vh;
     margin: 1vw;
@@ -32,7 +32,7 @@ form button{
     width: 20vw;
     height: 7vh;
     margin: 2vh; 
-    border-color: white;
+     border-color: white;
     border-radius: 1vw;
     color: white;
     font-size: 1.5vw;
@@ -80,3 +80,132 @@ form p{
 .form-loginpage{
     height: 50vh;
 }
+
+
+.home-header{
+    font-size: 2vw;
+    color: white;
+    margin: 10px;
+}
+.home-header.list{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    margin: 15px;
+}
+.expenselist a{
+    text-decoration: none;
+    color: white;
+    font-size: 0.9em;
+    border-bottom: 1px solid white;
+    padding: 0.2em;
+}
+.form-homepage{
+    width: auto;
+    height: auto;
+    margin: 10px 0;
+    border: 0;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+}
+.input-expense{
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-bottom: 2px solid black;
+}
+#input-submit{
+    margin: auto;
+    width: 15vw;
+    height: 5vh;
+    margin: 10px;
+    position: relative;
+    left:150%;
+    font-size: 1.5vw;
+}
+.balance{
+    background-color: white;
+    margin: 10px auto;
+    font-size: 1.7vw;
+}
+.balance span{
+    margin: 10px 50px;
+    background-color: white;
+    text-align: end;
+}
+#balance-amount{
+    margin-left: 0;
+}
+.credit-debit{
+    background-color: white;
+    display: flex;
+    margin: 1vw;
+}
+.credit,.debit{
+    margin: 0 10vw;
+    background-color: white;
+}
+.heading,.heading  > *,#total-amount{
+    font-size: 1.2vw;
+    background-color: white;
+    border: 0.4vw solid white;
+}
+.heading span{
+    margin: 0 2vw;
+}
+#total-amount{
+    margin-left: 0;
+}
+.data{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.data span{
+    margin: 0.5vw 1vw;
+    background-color: white;
+    font-size: 1.1vw;
+}
+.description,.category{
+    background-color: white;
+    font-size: 1.1vw;
+    text-align: center;
+    display: none;
+}
+#data-delbutton,#data-editbutton{
+    color: white;
+    font-size: 1.1vw;
+    padding: 0;
+    margin: 1px;
+    border: 1px solid aquamarine;
+    width:2.5vw;
+    height: 1.3vw;
+    text-align: center;
+    box-shadow: none;
+}
+#data-detailbutton{
+    color: white;
+    font-size: 1.1vw;
+    padding: 0;
+    margin: 1px;
+    border: 1px solid aquamarine;
+    width:3.3vw;
+    height: 1.3vw;
+    text-align: center;
+    box-shadow: none;
+}
+#data-delbutton:hover,#data-editbutton:hover,#data-detailbutton:hover{
+    color:aquamarine
+}
+#amount{
+    margin-left: 0;
+}
+
+
+
+

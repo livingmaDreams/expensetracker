@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day to Day Expenses</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="home-header">Day to Day Expenses</div>
+        <ul class="home-header list">
+            <li class="expenselist"><a href="">Daily</a></li>
+            <li class="expenselist"><a href="">Monthly</a></li>
+            <li class="expenselist"><a href="">Yearly</a></li>
+        </ul>
+    </header>
+    <form class="form-homepage" onsubmit="dailyExpenses(event)">
+        <div class="input-expense">
+        <input type="text" name="name" id="name" placeholder="Name">
+        <input type="text" name="amount" id="amount" placeholder="Amount">
+        <input type="text" name="description" id="description" placeholder="Description">
+        <select name="category" id="category" style="color:grey">
+            <option value="title">Category</option>
+            <option value="credit">Credit</option>
+            <option value="debit">Debit</option>
+        </select>
+        <button id="input-submit">SUBMIT</button>
+        </div>
+        <div class="balance">C/F<span>₹<span id="balance-amount">0.00</span></span></div>
+        <div class="credit-debit">
+            <div class="credit" id="credit">
+              <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-amount">0.00</span></span></div>
+              
+            </div>
+            <div class="debit" id="debit">
+                <div class="heading"><span>Total Expense(Dedit)</span><span>₹<span id="total-amount">0.00</span></span></div>
+              
+            </div>
+        </div>   
+    </form>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script src="/js/main.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded',homePage());
+</script>
+</html>
