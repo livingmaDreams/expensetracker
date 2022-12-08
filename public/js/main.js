@@ -45,7 +45,7 @@ function login(event){
     .then(res => {
       console.log(res.data)
        if(res.status == 200){ 
-         localStorage.setItem('expenseTracker',res.data.id);
+         localStorage.setItem('expenseTracker',res.data.token);
          const url = `http://localhost:3000/home`
          window.location.href = url;
        }
@@ -78,10 +78,10 @@ function dailyExpenses(event){
    const amount = event.target.amount.value;
    const description = event.target.description.value;
    const category = event.target.category.value;
-   const id = localStorage.getItem('expenseTracker');
+   const token = localStorage.getItem('expenseTracker');
 
-   const obj ={name,amount,description,category,id};
-   axios.post(`http://localhost:3000/home/daily/${id}`,obj)
+   const obj ={name,amount,description,category};
+   axios.post(`http://localhost:3000/home/daily`,obj,{ headers:{"Authorization":token}})
    .then(res => {
       expenseList(res.data.newexpense)
       event.target.name.value = '';
@@ -93,9 +93,9 @@ function dailyExpenses(event){
 }
 
 function homePage(){
-   const id = localStorage.getItem('expenseTracker');
+   const token = localStorage.getItem('expenseTracker');
 
-   axios.get(`http://localhost:3000/home/daily/${id}`)
+   axios.get(`http://localhost:3000/home/daily`,{ headers:{"Authorization":token}})
    .then(res =>{
       for(let data of res.data.expenses)
       expenseList(data);
@@ -110,7 +110,7 @@ function expenseList(data){
    let parEle;
 
    const divEle = document.createElement('div');
-   divEle.id= data.id;
+   
    
    divEle.innerHTML = `<div class="data"><span>${name}</span><span>₹<span id="amount">${amount}</span></span>
    <button id="data-editbutton" onClick="editExpense(event)">edit</button>
@@ -121,9 +121,11 @@ function expenseList(data){
    <div class="category">${category}</div>`;
    if(category == 'credit'){
    parEle = document.getElementById('credit');
+   divEle.id = `data-credit-${name}`;
    }
    else{
    parEle = document.getElementById('debit');
+   divEle.id = `data-debit-${name}`;
    }
    
    parEle.appendChild(divEle);
@@ -145,12 +147,12 @@ function details(event){
 
 function delExpense(event){
    const parELe = event.target.parentElement.parentElement;
-   const eId = parELe.id;
-   const id = localStorage.getItem('expenseTracker');
+   const token = localStorage.getItem('expenseTracker');
 
-   axios.delete(`http://localhost:3000/home/daily/delete/${id}?Eid=${eId}`)
+   axios.delete(`http://localhost:3000/home/daily/delete`,{ headers:{"Authorization":token}})
    .then(res => parELe.remove())
    .catch(err => console.log(err));
 
 }
+
 

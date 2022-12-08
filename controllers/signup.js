@@ -2,6 +2,7 @@ const User = require('../models/users.js');
 
 const path = require('path');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.getSignupPage =(req,res,next) =>{
     if(req.originalUrl == '/signup')
@@ -40,6 +41,10 @@ exports.getLoginPage = (req,res,next) =>{
     res.sendFile(path.join(__dirname,`../views${req.originalUrl}.html`));
 }
 
+function generateToken(id){
+    return jwt.sign({userid: id},'12345678987654321');
+}
+
 exports.loginUser = async (req,res,next) =>{
     const mail = req.body.mail;
     const password = req.body.password;
@@ -51,7 +56,7 @@ exports.loginUser = async (req,res,next) =>{
             if(result === false)
             res.status(401).json({status:'wrongpassword'});
             else
-            res.status(200).json({status:'userfound',id:data[0].id});
+            res.status(200).json({status:'userfound',token: generateToken(data[0].id)});
         })        
       }
     catch(err){
@@ -64,51 +69,40 @@ exports.getHomePage = (req,res,next) =>{
 }
 
 exports.getDailyExpenses =(req,res,next) =>{
-const id = req.params.id;
-User.findAll({where:{id:id}})
-.then(user =>{
-    return user[0].getExpenses();
-})
+
+req.user
+.getExpenses()
 .then(data => {
     res.status(200).json({expenses:data})
 })
 .catch(err => console.log(err));
 }
 
-
 exports.postDailyExpenses = (req,res,next) =>{
     const name = req.body.name;
     const category = req.body.category;
     const description = req.body.description;
     const amount = req.body.amount;
-    const id = req.params.id;
-
-   User.findAll({where:{id:id}})
-   .then(user => {
-    return user[0].createExpense({
+ 
+req.user
+.createExpense({
         name:name,
         category:category,
         description:description,
         amount:amount
     })
-    })
-    .then(data => {
+.then(data => {
         res.status(200).json({newexpense:data})
     })
-    .catch(err => console.log(err));  
+.catch(err => console.log(err));  
 }
 
 exports.delExpense = (req,res,next) =>{
-    const id = req.params.id;
-    const Eid = req.query.Eid;
-
-    User.findAll({where:{id:id}})
-    .then(user =>{
-        return user[0].getExpenses({where:{id:Eid}})
-    })
-    .then(exp => {
-        return exp[0].destroy();
-    })
-    .then(() => res.status(200).json({deleted:'true'}))
-    .catch(err => res.status(404).json({deleted:'false'}));
+req.user
+.getExpenses()
+.then(exp => {
+  return exp[0].destroy();
+})
+.then(() => res.status(200).json({deleted:'true'}))
+.catch(err => res.status(404).json({deleted:'false'}));
 }
