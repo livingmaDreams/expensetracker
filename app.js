@@ -19,6 +19,9 @@ app.use('/home',homeRouter);
 const purchaseRouter = require('./routes/purchase.js');
 app.use('/purchase',purchaseRouter);
 
+const forgotpasswordRouter = require('./routes/forgotpassword.js');
+app.use('/forgotpassword',forgotpasswordRouter);
+
 const User = require('./models/users.js');
 const Expense = require('./models/expenses.js');
 const Order = require('./models/order')

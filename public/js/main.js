@@ -239,3 +239,11 @@ propay.open();
 function darkTheme(){
   document.body.classList.toggle('dark')
 }
+
+function forgotPassword(event){
+   const mail = event.target.mail;
+   const obj = {mail};
+   axios.post('http://localhost:3000/forgotpassword/called',obj)
+   .then(res => console.log(res))
+   .catch(err => console.log(err));
+}

@@ -299,6 +299,20 @@ table > *{
     border-radius: 0.5vw;
     cursor: pointer;
 }
+.form-loginpage a:hover,.form-loginpage a:visited{
+    color: red;
+}
+.form-forgotpassword-page{
+    height: 40vh;
+}
+
+#forgotpassword-button{
+    background-color: aquamarine;
+}
+#forgotpassword-button:hover{
+   color: aquamarine;
+   background-color: white;
+}
 
 
 
