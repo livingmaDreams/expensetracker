@@ -299,8 +299,13 @@ table > *{
     border-radius: 0.5vw;
     cursor: pointer;
 }
+.form-loginpage a{
+    font-size: 1.2vw;
+    color:blue;
+}
 .form-loginpage a:hover,.form-loginpage a:visited{
     color: red;
+    
 }
 .form-forgotpassword-page{
     height: 40vh;
@@ -312,6 +317,9 @@ table > *{
 #forgotpassword-button:hover{
    color: aquamarine;
    background-color: white;
+}
+.form-changepassword-page{
+ height: 50vh;
 }
 
 

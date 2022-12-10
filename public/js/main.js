@@ -241,9 +241,10 @@ function darkTheme(){
 }
 
 function forgotPassword(event){
-   const mail = event.target.mail;
+   event.preventDefault();
+   const mail = event.target.mail.value;
    const obj = {mail};
    axios.post('http://localhost:3000/forgotpassword/called',obj)
-   .then(res => console.log(res))
+   .then(() => window.location.href='http://localhost:3000/login')
    .catch(err => console.log(err));
 }

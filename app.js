@@ -25,12 +25,16 @@ app.use('/forgotpassword',forgotpasswordRouter);
 const User = require('./models/users.js');
 const Expense = require('./models/expenses.js');
 const Order = require('./models/order')
+const Forgotpassword = require('./models/forgotpassword');
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(Forgotpassword);
+Forgotpassword.belongsTo(User);
 
 const sequelize = require('./util/database');
 sequelize
