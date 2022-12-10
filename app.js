@@ -16,11 +16,18 @@ app.use('/login',loginRouter);
 const homeRouter = require('./routes/home.js');
 app.use('/home',homeRouter);
 
+const purchaseRouter = require('./routes/purchase.js');
+app.use('/purchase',purchaseRouter);
+
 const User = require('./models/users.js');
 const Expense = require('./models/expenses.js');
+const Order = require('./models/order')
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
+
+User.hasMany(Order);
+Order.belongsTo(User);
 
 const sequelize = require('./util/database');
 sequelize

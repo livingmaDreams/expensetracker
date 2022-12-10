@@ -1,6 +1,11 @@
-*{
+body{
     background-color:aquamarine; 
     font-family: Arial, Helvetica, sans-serif;
+}
+.dark{
+    background-color: rgba(0, 0, 0, 0.867);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background 0.5s linear,color 0.5s linear;
 }
 header p{
     color: white;
@@ -42,6 +47,21 @@ form button:hover{
     background-color: white;
     color: aquamarine;
     border-color: aquamarine;
+}
+#input-submit{
+    background-color: aquamarine;
+    margin: auto;
+    width: 15vw;
+    height: 5vh;
+    margin: 10px;
+    position: relative;
+    left:150%;
+    font-size: 1.5vw;
+    border-color: white;
+}
+#input-submit:hover{
+    background-color: white;
+    color: aquamarine;
 }
 #login{
     width: 6vw;
@@ -110,7 +130,7 @@ form p{
     border-radius: 5px;
     background-color: white;
 }
-.input-expense{
+.input-expense{ 
     display: grid;
     grid-template-columns: repeat(4,auto);
     justify-content: center;
@@ -118,15 +138,42 @@ form p{
     background-color: white;
     border-bottom: 2px solid black;
 }
-#input-submit{
+#premium{
     margin: auto;
-    width: 15vw;
+    background-color: white;
+    color:aquamarine;
+    width: 10vw;
     height: 5vh;
     margin: 10px;
-    position: relative;
-    left:150%;
+    position: absolute;
+    left: 85%;
+    top: 1%;
     font-size: 1.5vw;
+    border-color:aquamarine;
+    border-radius: 1vw;
 }
+#premium:hover{
+    background-color: aquamarine;
+    color:white;
+    border-color: white;
+}
+#darkmode{
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.867);
+    width: 2vw;
+    height: 4vh;
+    margin: 10px;
+    position: absolute;
+    left: 96%;
+    top: 1.5%;
+    font-size: 1.5vw;
+    border-color:aquamarine;
+    color:white;
+    border-radius: 1.5vw; 
+}
+
 .balance{
     background-color: white;
     margin: 10px auto;
@@ -182,30 +229,76 @@ form p{
     font-size: 1.1vw;
     padding: 0;
     margin: 1px;
-    border: 1px solid aquamarine;
+    border: 1px solid white;
     width:2.5vw;
     height: 1.3vw;
     text-align: center;
     box-shadow: none;
+    background-color: aquamarine;
 }
 #data-detailbutton{
     color: white;
     font-size: 1.1vw;
     padding: 0;
     margin: 1px;
-    border: 1px solid aquamarine;
+    border: 1px solid white;
+    background-color: aquamarine;
     width:3.3vw;
     height: 1.3vw;
     text-align: center;
     box-shadow: none;
 }
 #data-delbutton:hover,#data-editbutton:hover,#data-detailbutton:hover{
-    color:aquamarine
+    color:aquamarine;
+    background-color: white;
+    border-color: aquamarine    ;
 }
 #amount{
     margin-left: 0;
 }
+table{
+    width: 30vw;
+    height: 30vh;
+    background-color: white;
+    border: 1.5px solid black;
+    border-radius: 1vw;
+}
+table > *{
+    font-size: 1.5vw;
+}
+.data-leadership{
+    text-align: center;
+}
+#sign-up,#login-page{
+    background-color: aquamarine;
+}
+#sign-up:hover,#login-page:hover{
+    background-color: white;
+}
+.leadership-list{
+    cursor: pointer;
+}
+#leadership-details{
+    position: absolute;
+    top:30%;
+    right:40%;
+    background-color: white;
+    border: 2px solid black;
+    width: 20vw;
+    height: 18vh;
+    border-radius: 2vw;
+    text-align: center;
+    font-size: 1.5vw;
+    padding: 2px;
+}
 
+#leadership-detail-close{
+    position: relative;
+    top: -94%;
+    left: 40%;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
 
 
 

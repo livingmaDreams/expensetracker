@@ -3,6 +3,8 @@ const User = require('../models/users.js');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Razorpay = require('razorpay');
+const Order = require('../models/order.js');
 
 exports.getSignupPage =(req,res,next) =>{
     if(req.originalUrl == '/signup')
@@ -21,7 +23,8 @@ try{
         defaults:{
         name: name,
         mail:mail,
-        password: hash
+        password: hash,
+        isPremium: 'false'
         }
     });
 
@@ -65,7 +68,12 @@ exports.loginUser = async (req,res,next) =>{
 }
 
 exports.getHomePage = (req,res,next) =>{
+   
+       // if(req.user.isPremium == 'true')
+        //res.sendFile(path.join(__dirname,`../views/premium.html`));
+    
     res.sendFile(path.join(__dirname,`../views/home.html`));
+    
 }
 
 exports.getDailyExpenses =(req,res,next) =>{
@@ -106,3 +114,60 @@ req.user
 .then(() => res.status(200).json({deleted:'true'}))
 .catch(err => res.status(404).json({deleted:'false'}));
 }
+
+
+exports.buyPremium = (req,res,next) =>{
+      let razorId;
+      let razor;
+    var instances = new Razorpay({
+        key_id : 'rzp_test_Hflumc5ZeKLXrp',
+        key_secret : 'b2f0ypGvOGUEukYuU6kR0G6j'
+    })
+    const amount = 2000;
+    instances.orders.create({amount})
+    .then(data => {
+     razorId = data.id;
+     return req.user.createOrder({orderid: razorId,status: 'PENDING'})
+    })
+    .then(() => res.status(200).json({orderid: razorId,key: instances.key_id,amount: amount}) )
+    .catch(err => res.status(403).json({ message: 'Something went wrong', error: err}));
+}
+
+exports.updatePremium = (req,res,next) => {
+    const orderid = req.body.orderid;
+    const paymentid = req.body.paymentid;
+    Order.findOne({where:{orderid:orderid}})
+    .then(order => {
+        return order.update({paymentid: paymentid,status:'SUCCESS'})
+    })
+    .then(() =>{
+        return req.user.update({isPremium: 'true'})
+    })
+    .then(() => res.status(200).json({message: 'TRANSACTION SUCCESS'}))
+    .catch(err => res.status(403).json({ error:err, message: 'TRANSACTION FAILED' }));
+}
+
+exports.getLeadershipRank = async (req,res,next) =>{
+    
+    let userExp = new Map();
+    const users = await User.findAll();
+     for(let user of users){
+        let total=0;
+        let userName = user.name;
+        const expenses = await user.getExpenses();
+         for(let expense of expenses){
+              if(expense.category == 'credit')
+                total = total + expense.amount;
+             else
+                total = total - expense.amount;
+            }
+        userExp.set(userName,total);
+     }
+     const mapSort = new Map([...userExp.entries()].sort((a, b) => b[1] - a[1]));
+     let obj = Object.fromEntries(mapSort);
+     let jsonString = JSON.stringify(obj);
+     res.status(200).send({leadership: jsonString});
+}
+
+
+
