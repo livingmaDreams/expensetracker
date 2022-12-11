@@ -120,6 +120,7 @@ form p{
     font-size: 0.9em;
     border-bottom: 1px solid white;
     padding: 0.2em;
+    cursor: pointer;
 }
 .form-homepage{
     width: auto;

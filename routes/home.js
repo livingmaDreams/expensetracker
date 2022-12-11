@@ -9,6 +9,8 @@ router.get('/daily',userAuthenticate.authenticate,controller.getDailyExpenses);
 router.post('/daily',userAuthenticate.authenticate,controller.postDailyExpenses);
 router.delete('/daily/delete',userAuthenticate.authenticate,controller.delExpense);
 router.get('/leadership',controller.getLeadershipRank);
+router.get('/monthly',userAuthenticate.authenticate,controller.getMonthlyExpenses);
+router.get('/yearly',userAuthenticate.authenticate,controller.getYearlyExpenses);
 
 
 module.exports = router;

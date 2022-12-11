@@ -70,16 +70,73 @@ exports.loginUser = async (req,res,next) =>{
 exports.getHomePage = (req,res,next) =>{
    
        // if(req.user.isPremium == 'true')
-        //res.sendFile(path.join(__dirname,`../views/premium.html`));
-    
+        //res.sendFile(path.join(__dirname,`../views/premium.html`));   
     res.sendFile(path.join(__dirname,`../views/home.html`));
-    
+   
 }
 
 exports.getDailyExpenses =(req,res,next) =>{
-
+    let data = [];
+const date = new Date().getDate();
+const month = new Date().getMonth();
+const yr = new Date().getFullYear();
 req.user
 .getExpenses()
+.then(exp =>{
+    for(let i of exp)
+    {
+        let sqlDate = i.createdAt.getDate();
+        let sqlMonth = i.createdAt.getMonth();
+        let sqlYr = i.createdAt.getFullYear();
+        if(sqlDate == date && sqlMonth == month && sqlYr == yr)
+            data.push(i);
+       
+    }
+    return data;
+})
+.then(data => {
+    res.status(200).json({expenses:data})
+})
+.catch(err => console.log(err));
+}
+
+exports.getMonthlyExpenses =(req,res,next) =>{
+    let data = [];
+const month = new Date().getMonth();
+const yr = new Date().getFullYear();
+req.user
+.getExpenses()
+.then(exp =>{
+    for(let i of exp)
+    {
+        let sqlMonth = i.createdAt.getMonth();
+        let sqlYr = i.createdAt.getFullYear();
+        if(sqlMonth == month && sqlYr == yr)
+            data.push(i);
+       
+    }
+    return data;
+})
+.then(data => {
+    res.status(200).json({expenses:data})
+})
+.catch(err => console.log(err));
+}
+
+exports.getYearlyExpenses =(req,res,next) =>{
+    let data = [];
+const yr = new Date().getFullYear();
+req.user
+.getExpenses()
+.then(exp =>{
+    for(let i of exp)
+    {
+        let sqlYr = i.createdAt.getFullYear();
+        if(sqlYr == yr)
+            data.push(i);
+    }
+    return data;
+})
 .then(data => {
     res.status(200).json({expenses:data})
 })

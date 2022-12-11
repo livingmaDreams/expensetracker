@@ -78,6 +78,7 @@ function dailyExpenses(event){
    const token = localStorage.getItem('expenseTracker');
 
    const obj ={name,amount,description,category};
+ 
    axios.post(`http://localhost:3000/home/daily`,obj,{ headers:{"Authorization":token}})
    .then(res => {
       expenseList(res.data.newexpense)
@@ -89,9 +90,22 @@ function dailyExpenses(event){
    .catch(err => console.log(err));
 }
 
-function homePage(){
+function homePage(){    
+   getDailyExpenses();
+   axios.get('http://localhost:3000/home/leadership')
+   .then(res =>{
+       const obj = JSON.parse(res.data.leadership);
+       leadershipBoard(obj);
+   })
+   .catch(err => console.log(err));
+}
+
+function getDailyExpenses(){
+   const list = document.getElementsByClassName('data-list');
+   for(let i=list.length-1;i>=0;i--)
+   list[i].remove();
+   document.getElementById('balance-amount').textContent = 0;
    const token = localStorage.getItem('expenseTracker');
-   let total=0;
 
    axios.get(`http://localhost:3000/home/daily`,{ headers:{"Authorization":token}})
    .then(res =>{
@@ -100,14 +114,39 @@ function homePage(){
       }  
    })
    .catch(err => console.log(err));
+}
 
-   axios.get('http://localhost:3000/home/leadership')
+function getMonthlyExpenses(){
+   const list = document.getElementsByClassName('data-list');
+   for(let i=list.length-1;i>=0;i--)
+   list[i].remove();
+   document.getElementById('balance-amount').textContent = 0;
+   const token = localStorage.getItem('expenseTracker');
+
+   axios.get(`http://localhost:3000/home/monthly`,{ headers:{"Authorization":token}})
    .then(res =>{
-       const obj = JSON.parse(res.data.leadership);
-       leadershipBoard(obj);
+      for(let data of res.data.expenses){
+      expenseList(data);
+      }  
    })
    .catch(err => console.log(err));
 }
+function getYearlyExpenses(){
+   const list = document.getElementsByClassName('data-list');
+   for(let i=list.length-1;i>=0;i--)
+   list[i].remove();
+   document.getElementById('balance-amount').textContent = 0;
+   const token = localStorage.getItem('expenseTracker');
+
+   axios.get(`http://localhost:3000/home/yearly`,{ headers:{"Authorization":token}})
+   .then(res =>{
+      for(let data of res.data.expenses){
+      expenseList(data);
+      }  
+   })
+   .catch(err => console.log(err));
+}
+
 function expenseList(data){      
    const name = data.name;
    const category = data.category;
@@ -123,12 +162,10 @@ function expenseList(data){
    document.getElementById('balance-amount').textContent = total.toFixed(2); 
 
    const divEle = document.createElement('div');
+   divEle.className='data-list';
    
    
    divEle.innerHTML = `<div class="data"><span>${name}</span><span>₹<span id="amount">${amount}</span></span>
-   <button id="data-editbutton" onClick="editExpense(event)">edit</button>
-    <button id="data-delbutton" onClick="delExpense(event)">del</button>
-    <button id="data-detailbutton" onClick="details(event)">details</button>
     </div>
     <div class="description">${description}</div>
    <div class="category">${category}</div>`;
@@ -143,8 +180,8 @@ function expenseList(data){
    
    parEle.appendChild(divEle); 
    
-
 }
+
 function leadershipBoard(obj){
    let rank=1;
    const table = document.getElementById('leadership-table');
