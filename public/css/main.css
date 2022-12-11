@@ -321,6 +321,11 @@ table > *{
 .form-changepassword-page{
  height: 50vh;
 }
+.form-expiredpassword-page{
+    width: 99vw;
+    margin:0;
+
+}
 
 
 
