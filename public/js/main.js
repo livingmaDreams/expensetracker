@@ -44,9 +44,13 @@ function login(event){
     axios.post('http://localhost:3000/login',obj)
     .then(res => {
       const token = res.data.token;
+      const premiumUser = res.data.premium;
        if(res.status == 200){ 
          localStorage.setItem('expenseTracker',token);
+         if(premiumUser == 'false')
         window.location.href = 'http://localhost:3000/home';
+        else
+        window.location.href='http://localhost:3000/premium';
      }
    })
     .catch(err => {
@@ -90,12 +94,15 @@ function dailyExpenses(event){
    .catch(err => console.log(err));
 }
 
-function homePage(){    
+function homePage(){
+   getDailyExpenses();
+}
+
+function premiumPage(){    
    getDailyExpenses();
    axios.get('http://localhost:3000/home/leadership')
    .then(res =>{
-       const obj = JSON.parse(res.data.leadership);
-       leadershipBoard(obj);
+      leadershipBoard(res.data.leadership);
    })
    .catch(err => console.log(err));
 }
@@ -105,6 +112,8 @@ function getDailyExpenses(){
    for(let i=list.length-1;i>=0;i--)
    list[i].remove();
    document.getElementById('balance-amount').textContent = 0;
+   document.getElementById('total-credit-amount').textContent = 0;
+   document.getElementById('total-debit-amount').textContent = 0;  
    const token = localStorage.getItem('expenseTracker');
 
    axios.get(`http://localhost:3000/home/daily`,{ headers:{"Authorization":token}})
@@ -121,6 +130,8 @@ function getMonthlyExpenses(){
    for(let i=list.length-1;i>=0;i--)
    list[i].remove();
    document.getElementById('balance-amount').textContent = 0;
+   document.getElementById('total-credit-amount').textContent = 0;
+   document.getElementById('total-debit-amount').textContent = 0; 
    const token = localStorage.getItem('expenseTracker');
 
    axios.get(`http://localhost:3000/home/monthly`,{ headers:{"Authorization":token}})
@@ -136,6 +147,8 @@ function getYearlyExpenses(){
    for(let i=list.length-1;i>=0;i--)
    list[i].remove();
    document.getElementById('balance-amount').textContent = 0;
+   document.getElementById('total-credit-amount').textContent = 0;
+   document.getElementById('total-debit-amount').textContent = 0; 
    const token = localStorage.getItem('expenseTracker');
 
    axios.get(`http://localhost:3000/home/yearly`,{ headers:{"Authorization":token}})
@@ -153,17 +166,26 @@ function expenseList(data){
    const description = data.description;
    const amount = data.amount;
    let parEle;
+  
 
    let total = document.getElementById('balance-amount').textContent;
-   if(data.category == 'credit')
-   total = +total + data.amount;
-   else
-   total = +total - data.amount;
-   document.getElementById('balance-amount').textContent = total.toFixed(2); 
+   let credit = document.getElementById('total-credit-amount').textContent; 
+   let debit = document.getElementById('total-debit-amount').textContent;  
+   if(data.category == 'credit'){
+      total = +total + data.amount;
+      credit = +credit + data.amount;
+   }
+   else{
+      total = +total - data.amount;
+      debit = +debit + data.amount;
+   }
+   
+   document.getElementById('balance-amount').textContent = total.toFixed(2);
+   document.getElementById('total-credit-amount').textContent = credit;
+   document.getElementById('total-debit-amount').textContent = debit;  
 
    const divEle = document.createElement('div');
    divEle.className='data-list';
-   
    
    divEle.innerHTML = `<div class="data"><span>${name}</span><span>₹<span id="amount">${amount}</span></span>
     </div>
@@ -179,18 +201,19 @@ function expenseList(data){
    }
    
    parEle.appendChild(divEle); 
+
    
 }
 
 function leadershipBoard(obj){
    let rank=1;
    const table = document.getElementById('leadership-table');
-   for(let i in obj){
+   for(let i of obj){
    const tr = document.createElement('tr');
    tr.innerHTML=`
    <td class="data-leadership">${rank++}</td>
-   <td class="data-leadership"><a class='leadership-list' onClick='leadershipDetail(event)'>${i}</a></td>
-   <td style='display:none'>${obj[i]}</td>`;
+   <td class="data-leadership"><a class='leadership-list' onClick='leadershipDetail(event)'>${i.username}</a></td>
+   <td style='display:none'>${i.total}</td>`;
    table.appendChild(tr);
    }
 }
@@ -198,8 +221,8 @@ function leadershipBoard(obj){
 function leadershipDetail(event){
    const div = document.createElement('div');
    div.id = 'leadership-details';
-   div.innerHTML=`<div><p>USERNAME:   ${event.target.textContent}</div>
-   <div><p>EXPENSES:   ₹${event.target.parentElement.nextElementSibling.textContent}</div>
+   div.innerHTML=`<div><p>Username:   ${event.target.textContent}</div>
+   <div><p>Balance:   ₹${event.target.parentElement.nextElementSibling.textContent}</div>
    <button id='leadership-detail-close' onClick="document.getElementById('leadership-details').remove();">X</button>`;
    document.body.appendChild(div);
    setTimeout(()=>{
@@ -250,7 +273,7 @@ var options = {
        axios.post('http://localhost:3000/purchase/premiumUser',obj,{ headers:{"Authorization":token}} )
        .then(() => {
          alert('You are a Premium User Now')
-         window.location.href = 'http://localhost:3000/home'})
+         window.location.href = 'http://localhost:3000/premium'})
        .catch(() => {
          alert('Something went wrong. Try Again!!!')
      });
@@ -306,3 +329,47 @@ function changePassword(event){
       .catch(err => console.log(err));
    }
 }
+
+function downloadLink(event){
+   event.preventDefault();
+   const token = localStorage.getItem('expenseTracker');
+   const div = document.createElement('div');
+   div.id = 'download-tab';
+   div.innerHTML=`
+   <table id="download-table">
+                <tr>
+                  <th>Date</th>
+                  <th>URL Link</th>
+                </tr>
+              </table>
+      <button id="create-download" onclick="createLink(event)">DOWNLOAD</button>
+      <button id='download-close' onclick="document.getElementById('download-tab).remove();'">X</button>`;
+   const form = document.querySelector('form');
+   form.appendChild(div);
+   axios.get('http://localhost:3000/premium/download',{ headers:{"Authorization":token}})
+   .then(res =>{
+      for(let data of res.data.links)
+      {
+         const date = new Date(data.createdAt).toLocaleDateString("en-GB");
+         const link = data.link;
+         const tr = document.createElement('tr');
+         tr.innerHTML=`
+         <td>${date}</td>
+         <td><a href=${link}>download</a></td>`;
+         document.getElementById('download-table').appendChild(tr);
+      }
+   })
+   .catch(err => console.log(err));
+}
+
+function createLink(event){
+   event.preventDefault();
+   const token = localStorage.getItem('expenseTracker');
+   axios.get('http://localhost:3000/premium/createlink',{ headers:{"Authorization":token}})
+   .then(res =>{
+       window.open(res.data.url);
+   })
+   .catch(err => console.log(err));
+}
+
+

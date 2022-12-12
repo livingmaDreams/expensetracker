@@ -11,7 +11,6 @@
     <header>
         <div class="home-header">Day to Day Expenses</div>
         <button id="premium" onclick="pay()">Premium</button>
-        <a id="darkmode" onclick="darkTheme()">&#127769;</a>
         <ul class="home-header list">
             <li class="expenselist"><a onclick="getDailyExpenses();">Daily</a></li>
             <li class="expenselist"><a onclick="getMonthlyExpenses();">Monthly</a></li>
@@ -34,19 +33,14 @@
         <div class="balance">BALANCE<span>₹<span id="balance-amount">0.00</span></span></div>
         <div class="credit-debit">
             <div class="credit" id="credit">
-              <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-amount">0.00</span></span></div> 
+              <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-credit-amount">0.00</span></span></div> 
             </div>
             <div class="debit" id="debit">
-                <div class="heading"><span>Total Expense(Dedit)</span><span>₹<span id="total-amount">0.00</span></span></div>
+                <div class="heading"><span>Total Expense(Dedit)</span><span>₹<span id="total-debit-amount">0.00</span></span></div>
             </div>
-        </div>  
+        </div> 
     </form>
-    <table id="leadership-table">
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-        </tr>
-      </table>
+  
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>

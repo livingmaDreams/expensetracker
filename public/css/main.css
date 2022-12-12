@@ -197,7 +197,7 @@ form p{
     margin: 0 10vw;
     background-color: white;
 }
-.heading,.heading  > *,#total-amount{
+.heading,.heading  > *,#total-credit-amount,#total-debit-amount{
     font-size: 1.2vw;
     background-color: white;
     border: 0.4vw solid white;
@@ -205,13 +205,13 @@ form p{
 .heading span{
     margin: 0 2vw;
 }
-#total-amount{
+#total-credit-amount,#total-debit-amount{
     margin-left: 0;
 }
 .data{
     background-color: white;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 .data span{
@@ -257,6 +257,39 @@ form p{
 #amount{
     margin-left: 0;
 }
+#download,#create-download{
+    background-color: aquamarine;
+    color: white;
+    width: 12vw;
+    height: 5vh;
+}
+#download:hover,#create-download:hover{
+    background-color: white;
+    color: aquamarine;
+}
+#download-tab{
+    position: absolute;
+    top: 10%;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+#download-table tr{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1vh;
+    font-size: 1.5vw;
+}
+#download-table{
+    margin: 3vw;
+}
+
 table{
     width: 30vw;
     height: 30vh;
@@ -299,6 +332,17 @@ table > *{
     left: 40%;
     border-radius: 0.5vw;
     cursor: pointer;
+}
+#download-close{
+    position: absolute;
+    top: 0.5%;
+    left: 90%;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    width: 2vw;
+    height: 5vh; 
+    background-color: white;
+    color: black;
 }
 .form-loginpage a{
     font-size: 1.2vw;

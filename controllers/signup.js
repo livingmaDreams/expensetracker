@@ -59,7 +59,7 @@ exports.loginUser = async (req,res,next) =>{
             if(result === false)
             res.status(401).json({status:'wrongpassword'});
             else
-            res.status(200).json({status:'userfound',token: generateToken(data[0].id)});
+            res.status(200).json({status:'userfound',token: generateToken(data[0].id),premium: data[0].isPremium});
         })        
       }
     catch(err){
@@ -67,12 +67,12 @@ exports.loginUser = async (req,res,next) =>{
     }
 }
 
-exports.getHomePage = (req,res,next) =>{
-   
-       // if(req.user.isPremium == 'true')
-        //res.sendFile(path.join(__dirname,`../views/premium.html`));   
-    res.sendFile(path.join(__dirname,`../views/home.html`));
-   
+exports.getHomePage = (req,res,next) =>{  
+    res.sendFile(path.join(__dirname,`../views/home.html`)); 
+}
+
+exports.getPremiumPage = (req,res,next) =>{  
+    res.sendFile(path.join(__dirname,`../views/premium.html`)); 
 }
 
 exports.getDailyExpenses =(req,res,next) =>{
@@ -206,9 +206,11 @@ exports.updatePremium = (req,res,next) => {
 
 exports.getLeadershipRank = async (req,res,next) =>{
     
-    let userExp = new Map();
+    let userExp =[];
+  
     const users = await User.findAll();
      for(let user of users){
+        let obj={};
         let total=0;
         let userName = user.name;
         const expenses = await user.getExpenses();
@@ -218,12 +220,11 @@ exports.getLeadershipRank = async (req,res,next) =>{
              else
                 total = total - expense.amount;
             }
-        userExp.set(userName,total);
+            obj = {username: userName,total:total};
+        userExp.push(obj);
      }
-     const mapSort = new Map([...userExp.entries()].sort((a, b) => b[1] - a[1]));
-     let obj = Object.fromEntries(mapSort);
-     let jsonString = JSON.stringify(obj);
-     res.status(200).send({leadership: jsonString});
+ const sort = userExp.sort((a, b) => b.total - a.total)
+     res.status(200).send({leadership: sort});
 }
 
 

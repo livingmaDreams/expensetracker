@@ -16,6 +16,9 @@ app.use('/login',loginRouter);
 const homeRouter = require('./routes/home.js');
 app.use('/home',homeRouter);
 
+const premiumRouter = require('./routes/premium');
+app.use('/premium',premiumRouter);
+
 const purchaseRouter = require('./routes/purchase.js');
 app.use('/purchase',purchaseRouter);
 
@@ -26,6 +29,7 @@ const User = require('./models/users.js');
 const Expense = require('./models/expenses.js');
 const Order = require('./models/order')
 const Forgotpassword = require('./models/forgotpassword');
+const Download = require('./models/download')
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
@@ -35,6 +39,9 @@ Order.belongsTo(User);
 
 User.hasMany(Forgotpassword);
 Forgotpassword.belongsTo(User);
+
+User.hasMany(Download);
+Download.belongsTo(User);
 
 const sequelize = require('./util/database');
 sequelize

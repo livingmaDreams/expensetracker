@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day to Day Expenses</title>
-    <link rel="stylesheet" href="C:/Users/deepi/NodeJS/expensemobile/public/css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
     <header>
@@ -13,9 +13,9 @@
         <button id="premium" onclick="pay()">Premium</button>
         <a id="darkmode" onclick="darkTheme()">&#127769;</a>
         <ul class="home-header list">
-            <li class="expenselist"><a href="">Daily</a></li>
-            <li class="expenselist"><a href="">Monthly</a></li>
-            <li class="expenselist"><a href="">Yearly</a></li>
+            <li class="expenselist"><a onclick="getDailyExpenses();">Daily</a></li>
+            <li class="expenselist"><a onclick="getMonthlyExpenses();">Monthly</a></li>
+            <li class="expenselist"><a onclick="getYearlyExpenses();">Yearly</a></li>
         </ul>
     </header>
     <form class="form-homepage" onsubmit="dailyExpenses(event)">
@@ -30,23 +30,30 @@
         </select>
         <button id="input-submit">SUBMIT</button>
         </div>
-        <div class="balance">C/F<span>₹<span id="balance-amount">0.00</span></span></div>
+        
+        <div class="balance">BALANCE<span>₹<span id="balance-amount">0.00</span></span></div>
         <div class="credit-debit">
             <div class="credit" id="credit">
-              <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-amount">0.00</span></span></div>
-              
+              <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-credit-amount">0.00</span></span></div> 
             </div>
             <div class="debit" id="debit">
-                <div class="heading"><span>Total Expense(Dedit)</span><span>₹<span id="total-amount">0.00</span></span></div>
+                <div class="heading"><span>Total Expense(Dedit)</span><span>₹<span id="total-debit-amount">0.00</span></span></div>
             </div>
-        </div>   
+        </div> 
+        <button id="download" onclick="downloadLink(event)">DOWNLOAD</button>
     </form>
-   
+    <table id="leadership-table">
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+        </tr>
+      </table>
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-<script src="C:/Users/deepi/NodeJS/expensemobile/public/js/main.js"></script>
+<script src="/js/main.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-    window.addEventListener('DOMContentLoaded',homePage());
+    window.addEventListener('DOMContentLoaded',premiumPage());
 </script>
 </html>
