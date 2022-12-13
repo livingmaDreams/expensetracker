@@ -21,6 +21,7 @@ try{
   if(user)
   await user.createForgotpassword({id:id,active:'true',expiresby:current});
 
+  sgMail.setApiKey(process.env.SENDGRID_API);
   setTimeout(() =>{
     Forgotpassword.findOne({where:{id:id}})
     .then(user => {

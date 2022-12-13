@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const Razorpay = require('razorpay');
 const Order = require('../models/order.js');
 const sequelize = require('../util/database');
-const { tmpdir } = require('os');
 
 
 exports.getSignupPage =(req,res,next) =>{
@@ -48,7 +47,7 @@ exports.getLoginPage = (req,res,next) =>{
 }
 
 function generateToken(id){
-    return jwt.sign({userid: id},'12345678987654321');
+    return jwt.sign({userid: id},process.env.JWT_TOKEN);
 }
 
 exports.loginUser = async (req,res,next) =>{
@@ -174,8 +173,8 @@ exports.buyPremium = (req,res,next) =>{
       let razorId;
       let razor;
     var instances = new Razorpay({
-        key_id : 'rzp_test_Hflumc5ZeKLXrp',
-        key_secret : 'b2f0ypGvOGUEukYuU6kR0G6j'
+        key_id : process.env.RAZORPAY_ID,
+        key_secret : process.env.RAZORPAY_SECRET
     })
     const amount = 2000;
     instances.orders.create({amount})

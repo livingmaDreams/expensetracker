@@ -1,11 +1,22 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const helmet = require('helmet');
+const fs = require('fs');
+const morgan = require('morgan');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+const dotenv = require('dotenv');
+dotenv.config();
+
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname,'access.log'),
+    {flags: 'a'});
 app.use(express.static(path.join(__dirname,'public')));
+// app.use(helmet());
+app.use(morgan('combined',{stream: accessLogStream}));
 
 const signupRouter = require('./routes/signup.js')
 app.use('/signup',signupRouter);
@@ -46,5 +57,5 @@ Download.belongsTo(User);
 const sequelize = require('./util/database');
 sequelize
 .sync()
-.then(() => app.listen(3000))
+.then(() => app.listen(process.env.port || 3000))
 .catch(err => console.log(err));
