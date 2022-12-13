@@ -95,13 +95,11 @@ function dailyExpenses(event){
 }
 
 function homePage(){
-   let page=1;
-   getDailyExpenses(page);
+   getDailyExpenses();
 }
 
-function premiumPage(){   
-   let page=1; 
-   getDailyExpenses(page);
+function premiumPage(){    
+   getDailyExpenses();
    axios.get('http://localhost:3000/home/leadership')
    .then(res =>{
       leadershipBoard(res.data.leadership);
@@ -109,7 +107,7 @@ function premiumPage(){
    .catch(err => console.log(err));
 }
 
-function getDailyExpenses(page){
+function getDailyExpenses(){
    const list = document.getElementsByClassName('data-list');
    for(let i=list.length-1;i>=0;i--)
    list[i].remove();
@@ -117,20 +115,9 @@ function getDailyExpenses(page){
    document.getElementById('total-credit-amount').textContent = 0;
    document.getElementById('total-debit-amount').textContent = 0;  
    const token = localStorage.getItem('expenseTracker');
-  
-   axios.get(`http://localhost:3000/home/daily/${page}`,{ headers:{"Authorization":token}})
+
+   axios.get(`http://localhost:3000/home/daily`,{ headers:{"Authorization":token}})
    .then(res =>{
-      let totalPage = res.data.totalpages;
-      if(totalPage != 0){
-         document.getElementById('pagination').innerHTML ='';
-      for(let i=1;i<=totalPage;i++){
-         const aTag = document.createElement('a');
-         aTag.className = 'daily-expense-pagination';
-         aTag.textContent= i;
-         aTag.setAttribute('onclick',"getDailyExpenses(event.target.textContent)");
-         document.getElementById('pagination').appendChild(aTag);
-      }
-      }
       for(let data of res.data.expenses){
       expenseList(data);
       }  
@@ -138,9 +125,8 @@ function getDailyExpenses(page){
    .catch(err => console.log(err));
 }
 
-function getMonthlyExpenses(page){
+function getMonthlyExpenses(){
    const list = document.getElementsByClassName('data-list');
-   document.getElementById('pagination').innerHTML ='';
    for(let i=list.length-1;i>=0;i--)
    list[i].remove();
    document.getElementById('balance-amount').textContent = 0;
@@ -148,48 +134,25 @@ function getMonthlyExpenses(page){
    document.getElementById('total-debit-amount').textContent = 0; 
    const token = localStorage.getItem('expenseTracker');
 
-   axios.get(`http://localhost:3000/home/monthly/${page}`,{ headers:{"Authorization":token}})
+   axios.get(`http://localhost:3000/home/monthly`,{ headers:{"Authorization":token}})
    .then(res =>{
-      let totalPage = res.data.totalpages;
-      if(totalPage != 0){
-         document.getElementById('pagination').innerHTML ='';
-      for(let i=1;i<=totalPage;i++){
-         const aTag = document.createElement('a');
-         aTag.className = 'monthly-expense-pagination';
-         aTag.textContent= i;
-         aTag.setAttribute('onclick',"getMonthlyExpenses(event.target.textContent)");
-         document.getElementById('pagination').appendChild(aTag);
-      }
-      }
       for(let data of res.data.expenses){
       expenseList(data);
       }  
    })
    .catch(err => console.log(err));
 }
-function getYearlyExpenses(page){
+function getYearlyExpenses(){
    const list = document.getElementsByClassName('data-list');
    for(let i=list.length-1;i>=0;i--)
    list[i].remove();
-   document.getElementById('pagination').innerHTML ='';
    document.getElementById('balance-amount').textContent = 0;
    document.getElementById('total-credit-amount').textContent = 0;
    document.getElementById('total-debit-amount').textContent = 0; 
    const token = localStorage.getItem('expenseTracker');
 
-   axios.get(`http://localhost:3000/home/yearly/${page}`,{ headers:{"Authorization":token}})
+   axios.get(`http://localhost:3000/home/yearly`,{ headers:{"Authorization":token}})
    .then(res =>{
-      let totalPage = res.data.totalpages;
-      if(totalPage != 0){
-         document.getElementById('pagination').innerHTML ='';
-      for(let i=1;i<=totalPage;i++){
-         const aTag = document.createElement('a');
-         aTag.className = 'monthly-expense-pagination';
-         aTag.textContent= i;
-         aTag.setAttribute('onclick',"getMonthlyExpenses(event.target.textContent)");
-         document.getElementById('pagination').appendChild(aTag);
-      }
-   }
       for(let data of res.data.expenses){
       expenseList(data);
       }  

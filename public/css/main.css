@@ -369,19 +369,7 @@ table > *{
 .form-expiredpassword-page{
     width: 99vw;
     margin:0;
-}
-#pagination{
-    margin: 1vw;
-    
-    font-size: 1.2vw;
-}
-.daily-expense-pagination,.monthly-expense-pagination{
-    width: 2vw;
-    height: 5vh;
-    border: none;
-    cursor: pointer;
-    border-bottom: 2px solid black;
-    margin: 0.5vw;
+
 }
 
 

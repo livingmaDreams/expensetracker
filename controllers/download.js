@@ -13,10 +13,12 @@ exports.getDownloadLinks = (req,res,next) =>{
 }
 
 function uploadToS3(data,filename){
-    const BUCKET_NAME='expensetrackersharpener';
-    const IAM_USER_KEY='AKIAQRGOVWWY6VJTG2A7';
-    const IAM_USER_SECRET='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';
+   
   
+    let s3Bucket = new aws.S3({
+      accessKeyId: IAM_USER_KEY,
+      secretAccessKey: IAM_USER_SECRET
+    });
   
     var params = {
       Bucket: BUCKET_NAME,

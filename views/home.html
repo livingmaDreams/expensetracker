@@ -12,9 +12,9 @@
         <div class="home-header">Day to Day Expenses</div>
         <button id="premium" onclick="pay()">Premium</button>
         <ul class="home-header list">
-            <li class="expenselist"><a onclick="getDailyExpenses('1');">Daily</a></li>
-            <li class="expenselist"><a onclick="getMonthlyExpenses('1');">Monthly</a></li>
-            <li class="expenselist"><a onclick="getYearlyExpenses('1');">Yearly</a></li>
+            <li class="expenselist"><a onclick="getDailyExpenses();">Daily</a></li>
+            <li class="expenselist"><a onclick="getMonthlyExpenses();">Monthly</a></li>
+            <li class="expenselist"><a onclick="getYearlyExpenses();">Yearly</a></li>
         </ul>
     </header>
     <form class="form-homepage" onsubmit="dailyExpenses(event)">
@@ -39,7 +39,6 @@
                 <div class="heading"><span>Total Expense(Dedit)</span><span>₹<span id="total-debit-amount">0.00</span></span></div>
             </div>
         </div> 
-        <section id="pagination"></section>
     </form>
   
 

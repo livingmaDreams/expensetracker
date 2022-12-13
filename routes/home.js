@@ -6,12 +6,12 @@ const downloadController = require('../controllers/download');
 const userAuthenticate = require('../middleware/authenticate');
 
 router.get('/',controller.getHomePage);
-router.get('/daily/:page',userAuthenticate.authenticate,controller.getDailyExpenses);
+router.get('/daily',userAuthenticate.authenticate,controller.getDailyExpenses);
 router.post('/daily',userAuthenticate.authenticate,controller.postDailyExpenses);
 router.delete('/daily/delete',userAuthenticate.authenticate,controller.delExpense);
 router.get('/leadership',controller.getLeadershipRank);
-router.get('/monthly/:page',userAuthenticate.authenticate,controller.getMonthlyExpenses);
-router.get('/yearly/:page',userAuthenticate.authenticate,controller.getYearlyExpenses);
+router.get('/monthly',userAuthenticate.authenticate,controller.getMonthlyExpenses);
+router.get('/yearly',userAuthenticate.authenticate,controller.getYearlyExpenses);
 
 
 
