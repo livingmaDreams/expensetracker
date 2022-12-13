@@ -28,7 +28,6 @@ try{
     }) 
     .catch(err => console.log(err));
   },3600000);
-  
  const msg = {
   to: 'sdeepicivil@gmail.com', 
   from: 'deepi.sakthivel@outlook.com',

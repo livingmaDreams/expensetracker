@@ -14,7 +14,6 @@ exports.getDownloadLinks = (req,res,next) =>{
 
 function uploadToS3(data,filename){
    
-  
     let s3Bucket = new aws.S3({
       accessKeyId: IAM_USER_KEY,
       secretAccessKey: IAM_USER_SECRET

@@ -13,9 +13,9 @@
         <button id="premium" onclick="pay()">Premium</button>
         <a id="darkmode" onclick="darkTheme()">&#127769;</a>
         <ul class="home-header list">
-            <li class="expenselist"><a onclick="getDailyExpenses();">Daily</a></li>
-            <li class="expenselist"><a onclick="getMonthlyExpenses();">Monthly</a></li>
-            <li class="expenselist"><a onclick="getYearlyExpenses();">Yearly</a></li>
+            <li class="expenselist"><a onclick="getDailyExpenses('1');">Daily</a></li>
+            <li class="expenselist"><a onclick="getMonthlyExpenses('1');">Monthly</a></li>
+            <li class="expenselist"><a onclick="getYearlyExpenses('1');">Yearly</a></li>
         </ul>
     </header>
     <form class="form-homepage" onsubmit="dailyExpenses(event)">
@@ -41,6 +41,13 @@
             </div>
         </div> 
         <button id="download" onclick="downloadLink(event)">DOWNLOAD</button>
+        <div id="pagination-div">
+            <section id="pagination"></section>
+            <div id="pagination-perpage">
+            <label for="rows-per-page">rows per page:</label>
+            <input type="number" id="rows-per-page" step="5" min="5" placeholder="5" onchange="perPage(event.target.value)"> 
+        </div>  
+        </div>
     </form>
     <table id="leadership-table">
         <tr>

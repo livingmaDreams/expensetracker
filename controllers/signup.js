@@ -5,6 +5,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Razorpay = require('razorpay');
 const Order = require('../models/order.js');
+const sequelize = require('../util/database');
+const { tmpdir } = require('os');
+
 
 exports.getSignupPage =(req,res,next) =>{
     if(req.originalUrl == '/signup')
@@ -75,72 +78,66 @@ exports.getPremiumPage = (req,res,next) =>{
     res.sendFile(path.join(__dirname,`../views/premium.html`)); 
 }
 
-exports.getDailyExpenses =(req,res,next) =>{
-    let data = [];
-const date = new Date().getDate();
-const month = new Date().getMonth();
-const yr = new Date().getFullYear();
-req.user
-.getExpenses()
-.then(exp =>{
-    for(let i of exp)
-    {
-        let sqlDate = i.createdAt.getDate();
-        let sqlMonth = i.createdAt.getMonth();
-        let sqlYr = i.createdAt.getFullYear();
-        if(sqlDate == date && sqlMonth == month && sqlYr == yr)
-            data.push(i);
-       
-    }
-    return data;
-})
-.then(data => {
-    res.status(200).json({expenses:data})
-})
-.catch(err => console.log(err));
+exports.getDailyExpenses = async(req,res,next) =>{
+    const page = req.params.page;
+    const limit = +req.query.perPage;
+    let tDate = new Date().getDate();
+try{
+    const date = sequelize.fn('date_format', sequelize.col('createdAt'), '%d');
+    const where = sequelize.where(date,tDate)
+    const totalExp = await req.user.getExpenses({where: where});
+    const exp = await req.user.getExpenses({where: where, offset:((page-1)*limit),limit: +limit});
+    const pages = Math.ceil(totalExp.length/limit);
+    if(page == '1')
+    res.status(200).json({expenses:exp,totalpages: pages});
+    else
+    res.status(200).json({expenses:exp,totalpages: 0});
+}
+catch(err){
+    console.log(err);
+}
 }
 
-exports.getMonthlyExpenses =(req,res,next) =>{
-    let data = [];
-const month = new Date().getMonth();
-const yr = new Date().getFullYear();
-req.user
-.getExpenses()
-.then(exp =>{
-    for(let i of exp)
-    {
-        let sqlMonth = i.createdAt.getMonth();
-        let sqlYr = i.createdAt.getFullYear();
-        if(sqlMonth == month && sqlYr == yr)
-            data.push(i);
-       
-    }
-    return data;
-})
-.then(data => {
-    res.status(200).json({expenses:data})
-})
-.catch(err => console.log(err));
+
+exports.getMonthlyExpenses = async (req,res,next) =>{
+    const page = req.params.page;
+    let tMonth = new Date().getMonth();
+    tMonth = tMonth + 1;
+    const limit = +req.query.perPage;
+try{
+    const month = sequelize.fn('date_format', sequelize.col('createdAt'), '%m');
+    const where = sequelize.where(month,tMonth)
+    const totalExp = await req.user.getExpenses({where: where});
+    const exp = await req.user.getExpenses({where: where, offset:((page-1)*limit),limit: limit});
+    const pages = Math.ceil(totalExp.length/limit);
+    if(page == '1')
+    res.status(200).json({expenses:exp,totalpages: pages});
+    else
+    res.status(200).json({expenses:exp,totalpages: 0});
+}
+catch(err){
+    console.log(err);
+}
 }
 
-exports.getYearlyExpenses =(req,res,next) =>{
-    let data = [];
+exports.getYearlyExpenses = async (req,res,next) =>{
+    const page = req.params.page;
 const yr = new Date().getFullYear();
-req.user
-.getExpenses()
-.then(exp =>{
-    for(let i of exp)
-    {
-        let sqlYr = i.createdAt.getFullYear();
-        if(sqlYr == yr)
-            data.push(i);
-    }
-    return data;
-})
-.then(data => {
-    res.status(200).json({expenses:data})
-})
-.catch(err => console.log(err));
+const limit = +req.query.perPage;
+try{
+    const year = sequelize.fn('date_format', sequelize.col('createdAt'), '%Y');
+    const where = sequelize.where(year,yr)
+    const totalExp = await req.user.getExpenses({where: where});
+    const exp = await req.user.getExpenses({where: where, offset:((page-1)*limit),limit: limit});
+    const pages = Math.ceil(totalExp.length/limit);
+    if(page == '1')
+    res.status(200).json({expenses:exp,totalpages: pages});
+    else
+    res.status(200).json({expenses:exp,totalpages: 0});
+}
+catch(err){
+    console.log(err);
+}
 }
 
 exports.postDailyExpenses = (req,res,next) =>{
@@ -226,6 +223,5 @@ exports.getLeadershipRank = async (req,res,next) =>{
  const sort = userExp.sort((a, b) => b.total - a.total)
      res.status(200).send({leadership: sort});
 }
-
 
 
