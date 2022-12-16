@@ -8,7 +8,7 @@ function signup(event){
    const error = document.getElementById('error')
    
    const obj = { name,mail,password};
-   axios.post('http://localhost:3000/signup',obj)
+   axios.post('http://3.111.42.108:3000/signup',obj)
    .then(res => {
        if(res.status == 200)
         {

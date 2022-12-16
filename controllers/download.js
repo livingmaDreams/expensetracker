@@ -23,6 +23,8 @@ function uploadToS3(data,filename){
       secretAccessKey: IAM_USER_SECRET
     });
   
+   
+
     var params = {
       Bucket: BUCKET_NAME,
       Key:filename,

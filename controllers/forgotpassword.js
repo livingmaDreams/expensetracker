@@ -20,6 +20,7 @@ try{
   const user = await User.findOne({where:{mail:mail}});
   if(user)
   await user.createForgotpassword({id:id,active:'true',expiresby:current});
+  
 
   sgMail.setApiKey(process.env.SENDGRID_API);
   setTimeout(() =>{
@@ -34,7 +35,7 @@ try{
   from: 'deepi.sakthivel@outlook.com',
   subject: 'Reset Password Link',
   text: 'Click on this link to reset a password',
-  html: `<a href='http://localhost:3000/forgotpassword/${id}'>Reset Password Link</a>`
+  html: `<a href='http://3.111.42.108:3000/forgotpassword/${id}'>Reset Password Link</a>`
 }
 await sgMail.send(msg);
 

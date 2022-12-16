@@ -5,7 +5,7 @@ function premiumPage(){
     getDailyExpenses(page);
     const perPage = localStorage.getItem('expenseTrackerperPage');
     document.getElementById('rows-per-page').value = perPage;
-    axios.get('http://localhost:3000/home/leadership')
+    axios.get('http://3.111.42.108:3000/home/leadership')
     .then(res =>{
        leadershipBoard(res.data.leadership);
     })
@@ -59,7 +59,7 @@ document.getElementById('premium').addEventListener('click', pay);
 function pay(){
   const token = localStorage.getItem('expenseTracker');
 
-  axios.get('http://localhost:3000/purchase/premiumUser',{ headers:{"Authorization":token}})
+  axios.get('http://3.111.42.108:3000/purchase/premiumUser',{ headers:{"Authorization":token}})
   .then(res => {
     console.log('hi')
      var options = {
@@ -73,10 +73,10 @@ function pay(){
      const paymentid = response.razorpay_payment_id;
      const orderid= options.orderid ;
      const obj = {orderid,paymentid };
-      axios.post('http://localhost:3000/purchase/premiumUser',obj,{ headers:{"Authorization":token}} )
+      axios.post('http://3.111.42.108:3000/purchase/premiumUser',obj,{ headers:{"Authorization":token}} )
       .then(() => {
         alert('You are a Premium User Now')
-        window.location.href = 'http://localhost:3000/premium'})
+        window.location.href = 'http://3.111.42.108:3000/premium'})
       .catch(() => {
         alert('Something went wrong. Try Again!!!')
     });
@@ -120,7 +120,7 @@ function dailyExpenses(event){
 
   const obj ={name,amount,description,category};
 
-  axios.post(`http://localhost:3000/home/daily`,obj,{ headers:{"Authorization":token}})
+  axios.post(`http://3.111.42.108:3000/home/daily`,obj,{ headers:{"Authorization":token}})
   .then(res => {
      expenseList(res.data.newexpense)
      event.target.name.value = '';
@@ -156,7 +156,7 @@ function getDailyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0;  
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://localhost:3000/home/daily/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://3.111.42.108:3000/home/daily/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -189,7 +189,7 @@ function getMonthlyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0; 
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://localhost:3000/home/monthly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://3.111.42.108:3000/home/monthly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -222,7 +222,7 @@ function getYearlyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0; 
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://localhost:3000/home/yearly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://3.111.42.108:3000/home/yearly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){

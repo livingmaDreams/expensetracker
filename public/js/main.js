@@ -16,7 +16,7 @@
 //   const parELe = event.target.parentElement.parentElement;
 //   const token = localStorage.getItem('expenseTracker');
 
-//   axios.delete(`http://localhost:3000/home/daily/delete`,{ headers:{"Authorization":token}})
+//   axios.delete(`http://3.111.42.108:3000/home/daily/delete`,{ headers:{"Authorization":token}})
 //   .then(res => parELe.remove())
 //   .catch(err => console.log(err));
 
@@ -27,9 +27,10 @@ document.getElementById('download').addEventListener('click', downloadLink);
 
 function downloadLink(event){
   event.preventDefault();
+  console.log('hi')
+  document.getElementById('download-tab').style.display='flex';
   const token = localStorage.getItem('expenseTracker');
-  const div = document.createElement('div');
-  div.id = 'download-tab';
+  const div = document.getElementById('download-tab');
   div.innerHTML=`
   <table id="download-table">
                <tr>
@@ -41,8 +42,9 @@ function downloadLink(event){
      <button id='download-close'>X</button>`;
   const form = document.querySelector('form');
   form.appendChild(div);
-  axios.get('http://localhost:3000/premium/download',{ headers:{"Authorization":token}})
+  axios.get('http://3.111.42.108:3000/premium/download',{ headers:{"Authorization":token}})
   .then(res =>{
+    console.log(res)
      for(let data of res.data.links)
      {
         const date = new Date(data.createdAt).toLocaleDateString("en-GB");
@@ -57,23 +59,26 @@ function downloadLink(event){
   .catch(err => console.log(err));
 }
 
+document.getElementById('download-tab').addEventListener('click', downloadTab);
 
-document.getElementById('create-download').addEventListener('click', createLink);
+function downloadTab(event){
 
-function createLink(event){
+if(event.target.id == 'create-download'){
   event.preventDefault();
+  console.log('hi')
   const token = localStorage.getItem('expenseTracker');
-  axios.get('http://localhost:3000/premium/createlink',{ headers:{"Authorization":token}})
+  axios.get('http://3.111.42.108:3000/premium/createlink',{ headers:{"Authorization":token}})
   .then(res =>{
+     console.log(res)
       window.open(res.data.url);
   })
   .catch(err => console.log(err));
 }
 
-document.getElementById('download-close').addEventListener('click', downloadClose);
-
-function downloadClose(){
-   document.getElementById('download-tab').remove(); 
+if(event.target.id == 'download-close'){
+  event.preventDefault();
+   document.getElementById('download-tab').style.display='none';
+}
 }
 
 
