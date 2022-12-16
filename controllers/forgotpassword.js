@@ -16,7 +16,7 @@ exports.getPasswordLink = async(req,res,next) =>{
 try{
   const id = uuid.v4();
   let current = new Date();
-  current.setHours(current.getHours() + 1);
+  current.setMinutes(current.getMinutes() + 2);
   const user = await User.findOne({where:{mail:mail}});
   if(user)
   await user.createForgotpassword({id:id,active:'true',expiresby:current});
@@ -28,7 +28,7 @@ try{
        return user.update({active:'false'})
     }) 
     .catch(err => console.log(err));
-  },3600000);
+  },120000);
  const msg = {
   to: 'sdeepicivil@gmail.com', 
   from: 'deepi.sakthivel@outlook.com',

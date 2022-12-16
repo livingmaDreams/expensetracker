@@ -171,7 +171,6 @@ req.user
 
 exports.buyPremium = (req,res,next) =>{
       let razorId;
-      let razor;
     var instances = new Razorpay({
         key_id : process.env.RAZORPAY_ID,
         key_secret : process.env.RAZORPAY_SECRET

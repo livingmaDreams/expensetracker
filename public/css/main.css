@@ -207,6 +207,7 @@ form p{
 }
 #total-credit-amount,#total-debit-amount{
     margin-left: 0;
+    margin-right: 0;
 }
 .data{
     background-color: white;

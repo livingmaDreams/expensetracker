@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day to Day Expenses</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
     <header>
         <div class="home-header">Day to Day Expenses</div>
-        <button id="premium" onclick="pay()">Premium</button>
+        <button id="premium">Premium</button>
         <ul class="home-header list">
-            <li class="expenselist"><a onclick="getDailyExpenses('1');">Daily</a></li>
-            <li class="expenselist"><a onclick="getMonthlyExpenses('1');">Monthly</a></li>
-            <li class="expenselist"><a onclick="getYearlyExpenses('1');">Yearly</a></li>
+            <li class="expenselist"><a id="daily-expense-link">Daily</a></li>
+            <li class="expenselist"><a id="monthly-expense-link">Monthly</a></li>
+            <li class="expenselist"><a id="yearly-expense-link">Yearly</a></li>
         </ul>
     </header>
-    <form class="form-homepage" onsubmit="dailyExpenses(event)">
+    <form class="form-homepage" id="form-homepage" >
         <div class="input-expense">
         <input type="text" name="name" id="name" placeholder="Name">
         <input type="text" name="amount" id="amount" placeholder="Amount">
@@ -43,7 +43,7 @@
             <section id="pagination"></section>
             <div id="pagination-perpage">
             <label for="rows-per-page">rows per page:</label>
-            <input type="number" id="rows-per-page" step="5" min="5" placeholder="5" onchange="perPage(event.target.value)"> 
+            <input type="number" id="rows-per-page" step="5" min="5" placeholder="5"> 
         </div>  
         </div>
        
@@ -52,9 +52,7 @@
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="/js/home.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-    window.addEventListener('DOMContentLoaded',homePage());
-</script>
+
 </html>
