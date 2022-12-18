@@ -1,28 +1,4 @@
 
-// function details(event){
-//   const parELe = event.target.parentElement;
-//   const description = parELe.nextElementSibling;
-//   const category = description.nextElementSibling;
-//   description.style.display = 'block';
-//      category.style.display = 'block';
-//   setTimeout(()=>{
-//      description.style.display = 'none';
-//      category.style.display = 'none';
-//   },2000)
-   
-// }
-
-// function delExpense(event){
-//   const parELe = event.target.parentElement.parentElement;
-//   const token = localStorage.getItem('expenseTracker');
-
-//   axios.delete(`http://3.111.42.108:3000/home/daily/delete`,{ headers:{"Authorization":token}})
-//   .then(res => parELe.remove())
-//   .catch(err => console.log(err));
-
-// }
-
-
 document.getElementById('download').addEventListener('click', downloadLink);
 
 function downloadLink(event){
@@ -42,7 +18,7 @@ function downloadLink(event){
      <button id='download-close'>X</button>`;
   const form = document.querySelector('form');
   form.appendChild(div);
-  axios.get('http://3.111.42.108:3000/premium/download',{ headers:{"Authorization":token}})
+  axios.get('http://3.111.151.88:3000/premium/download',{ headers:{"Authorization":token}})
   .then(res =>{
     console.log(res)
      for(let data of res.data.links)
@@ -67,7 +43,7 @@ if(event.target.id == 'create-download'){
   event.preventDefault();
   console.log('hi')
   const token = localStorage.getItem('expenseTracker');
-  axios.get('http://3.111.42.108:3000/premium/createlink',{ headers:{"Authorization":token}})
+  axios.get('http://3.111.151.88:3000/premium/createlink',{ headers:{"Authorization":token}})
   .then(res =>{
      console.log(res)
       window.open(res.data.url);

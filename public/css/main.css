@@ -63,7 +63,7 @@ form button:hover{
     background-color: white;
     color: aquamarine;
 }
-#login{
+#login,#signup{
     width: 6vw;
     height: 3.5vh;
     margin: 2vh;
@@ -80,7 +80,7 @@ form button:hover{
      text-decoration: none;
      text-align: center;
 }
-#login:hover{
+#login:hover,#signup:hover{
     background-color: aquamarine;
     color: white;
 }
@@ -139,7 +139,7 @@ form p{
     background-color: white;
     border-bottom: 2px solid black;
 }
-#premium{
+#premium,#logout{
     margin: auto;
     background-color: white;
     color:aquamarine;
@@ -153,11 +153,12 @@ form p{
     border-color:aquamarine;
     border-radius: 1vw;
 }
-#premium:hover{
+#premium:hover,#logout:hover{
     background-color: aquamarine;
     color:white;
     border-color: white;
 }
+
 #darkmode{
     text-align: center;
     cursor: pointer;
@@ -325,6 +326,63 @@ table > *{
     text-align: center;
     font-size: 1.5vw;
     padding: 2px;
+}
+#expense-description h4{
+    font-size: 1.5vw;
+    margin: 1vw auto;
+}
+#expense-description{
+    display: none;
+    flex-direction: column;
+    width: 40vw;
+    height: 70vh;
+    top: 17%;
+    right: 30%;
+    position: absolute;
+    background-color: white;
+    border: 2px solid aquamarine;
+    border-radius: 2vw;
+    color: black;   
+}
+#expense-description input{
+    font-size: 1.2vw;
+    margin-bottom: 1vw;
+    width: 25vw;
+    margin-left: 5vw;
+    margin-right: 1vw;
+}
+#expense-description label{
+    font-size: 1.2vw;
+    margin-top: 1vw;
+    margin-left: 5vw;
+    margin-right: 1vw;
+}
+#expense-description select{
+    font-size: 1.2vw;
+    margin-bottom: 1vw;
+    width: 25vw;
+    margin-left: 5vw;
+    margin-right: 1vw;
+}
+#del-detail,#edit-detail,#close-detail{
+    background-color:aquamarine;
+    color: white;
+    width: 8vw;
+    height: 5vh;
+    border: 1px solid white;
+    border-radius: 1vw;
+    font-size: 1.2vw; 
+    margin-left: 4vw; 
+    margin-top: 1.5vh;
+}
+
+#del-detail:hover,#edit-detail:hover,#close-detail:hover{
+    background-color: white;
+    color: aquamarine;
+    border: 1px solid aquamarine;
+}
+#expense-list-name{
+    cursor: pointer;
 }
 
 #leadership-detail-close{
