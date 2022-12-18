@@ -159,17 +159,27 @@ req.user
 }
 
 exports.delExpense = (req,res,next) =>{
-req.user
-.getExpenses()
-.then(exp => {
-  return exp[0].destroy();
-})
-.then(() => res.status(200).json({deleted:'true'}))
-.catch(err => res.status(404).json({deleted:'false'}));
-}
+    const name = req.body.name;
+    const amount = req.body.amount;
+    const desc = req.body.desc;
+    const category = req.body.category;
+     req.user
+     .getExpenses({where:{name:name,amount:amount,description:desc,category:category}})
+     .then(exp => {
+        console.log(exp)
+         return exp[0].destroy();
+        })
+      .then(() => res.status(200).json({deleted:'true'}))
+       .catch(err => res.status(404).json({deleted:'false'}));
+ }
 
 
-exports.buyPremium = (req,res,next) =>{
+exports.buyPremium = async (req,res,next) =>{
+
+  
+    if(req.user.isPremium == 'true')
+    res.status(200).json({message:"Premium user"})
+    else{
       let razorId;
     var instances = new Razorpay({
         key_id : process.env.RAZORPAY_ID,
@@ -183,6 +193,7 @@ exports.buyPremium = (req,res,next) =>{
     })
     .then(() => res.status(200).json({orderid: razorId,key: instances.key_id,amount: amount}) )
     .catch(err => res.status(403).json({ message: 'Something went wrong', error: err}));
+    }
 }
 
 exports.updatePremium = (req,res,next) => {

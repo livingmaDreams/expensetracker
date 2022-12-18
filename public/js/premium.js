@@ -1,3 +1,4 @@
+
 window.addEventListener('DOMContentLoaded',premiumPage);
 
 function premiumPage(){   
@@ -5,7 +6,7 @@ function premiumPage(){
     getDailyExpenses(page);
     const perPage = localStorage.getItem('expenseTrackerperPage');
     document.getElementById('rows-per-page').value = perPage;
-    axios.get('http://3.111.42.108:3000/home/leadership')
+    axios.get('http://3.111.151.88:3000/home/leadership')
     .then(res =>{
        leadershipBoard(res.data.leadership);
     })
@@ -37,9 +38,9 @@ function leadershipDetail(event){
   <div><p>Balance:   ₹${event.target.parentElement.nextElementSibling.textContent}</div>
   <button id='leadership-detail-close'>X</button>`;
   document.body.appendChild(div);
-  // setTimeout(()=>{
-  //    div.remove();
-  // },2000)
+  setTimeout(()=>{
+     div.remove();
+  },2000)
 }
 
 document.body.addEventListener('click',(event)=>{
@@ -50,54 +51,7 @@ document.body.addEventListener('click',(event)=>{
 function leadershipDetailClose(){
    document.getElementById('leadership-details').remove();
 }
-
-
-//PAY
-
-document.getElementById('premium').addEventListener('click', pay);
-
-function pay(){
-  const token = localStorage.getItem('expenseTracker');
-
-  axios.get('http://3.111.42.108:3000/purchase/premiumUser',{ headers:{"Authorization":token}})
-  .then(res => {
-    console.log('hi')
-     var options = {
-   "key": res.data.key,
-    "orderid": res.data.orderid,
-   "amount": res.data.amount,
-   "name": "Expense Traacker Premium",
-   "description": "To buy premium membership",
-   "image": "img/logo.png",
-   "handler": function (response) {
-     const paymentid = response.razorpay_payment_id;
-     const orderid= options.orderid ;
-     const obj = {orderid,paymentid };
-      axios.post('http://3.111.42.108:3000/purchase/premiumUser',obj,{ headers:{"Authorization":token}} )
-      .then(() => {
-        alert('You are a Premium User Now')
-        window.location.href = 'http://3.111.42.108:3000/premium'})
-      .catch(() => {
-        alert('Something went wrong. Try Again!!!')
-    });
-   },
-   "prefill": {
-       "name": "ABC", // pass customer name
-       "email": 'A@A.COM',// customer email
-       "contact": '+919123456780' //customer phone no.
-   },
-   "notes": {
-       "address": "address" //customer address 
-   },
-   "theme": {
-       "color": "#15b8f3" // screen color
-   }
-};
-var propay = new Razorpay(options);
-propay.open();
-  })
-  .catch(err => console.log(err));
-}
+ 
 
 //DARK THEME
 
@@ -120,7 +74,7 @@ function dailyExpenses(event){
 
   const obj ={name,amount,description,category};
 
-  axios.post(`http://3.111.42.108:3000/home/daily`,obj,{ headers:{"Authorization":token}})
+  axios.post(`http://3.111.151.88:3000/home/daily`,obj,{ headers:{"Authorization":token}})
   .then(res => {
      expenseList(res.data.newexpense)
      event.target.name.value = '';
@@ -156,7 +110,7 @@ function getDailyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0;  
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://3.111.42.108:3000/home/daily/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://3.111.151.88:3000/home/daily/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -189,7 +143,7 @@ function getMonthlyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0; 
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://3.111.42.108:3000/home/monthly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://3.111.151.88:3000/home/monthly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -222,7 +176,7 @@ function getYearlyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0; 
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://3.111.42.108:3000/home/yearly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://3.111.151.88:3000/home/yearly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -268,7 +222,7 @@ function expenseList(data){
     const divEle = document.createElement('div');
     divEle.className='data-list';
     
-    divEle.innerHTML = `<div class="data"><span>${name}</span><span>₹<span id="amount">${amount}</span></span>
+    divEle.innerHTML = `<div class="data"><span><a id="expense-list-name">${name}</a></span><span>₹<span id="amount">${amount}</span></span>
      </div>
      <div class="description">${description}</div>
     <div class="category">${category}</div>`;
@@ -295,4 +249,90 @@ document.getElementById('pagination').addEventListener('click', (event)=>{
     if(event.target.id == 'yearly-expense-pagination')
     getYearlyExpenses(event.target.textContent);
   });
+
+document.getElementById('logout').addEventListener('click',logout);
+
+function logout(){
+   localStorage.setItem('expenseTracker','');
+   window.location.href="http://3.111.151.88:3000/login";
+}
+
+document.getElementById('credit-debit').addEventListener('click',expenseDetail);
+
+function expenseDetail(event){
+   if(event.target.id == 'expense-list-name'){
+      const name = event.target.textContent;
+      const amount = event.target.parentElement.nextElementSibling.firstElementChild.textContent;
+      const desc = event.target.parentElement.parentElement.nextElementSibling.textContent;
+      const category = event.target.parentElement.parentElement.nextElementSibling.nextElementSibling.textContent;
+      document.getElementById('expense-description').style.display= 'flex';
+      const div = document.getElementById('expense-description');
+      div.innerHTML = `
+      <h4>Expense Detail</h4>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="exp-desc-name" value=${name} disabled>
+      <label for="name">Amount</label>
+      <input type="text" name="amount" id="exp-desc-amount" value=${amount} disabled>
+      <label for="name">Description</label>
+      <input type="text" name="description" id="exp-desc-description" value=${desc} disabled>
+      <label for="name">Category</label>
+      <select name="category" id="detail-category" style="color:grey">
+          <option value="title">Category</option>
+          <option value="credit">Credit</option>
+          <option value="debit">Debit</option>
+      </select>
+      <div id="expense-detail-button">
+      <button id="edit-detail">EDIT</button>
+      <button id="del-detail">DELETE</button>
+      <button id="close-detail">Close</button>
+      </div>`;
+      document.getElementById('detail-category').value = category; 
+      expenseDetailTab(event);  
+
+   }
+   
+}
+
+
+function expenseDetailTab(event){
+   document.getElementById('close-detail').addEventListener('click' ,() => {
+      document.getElementById('expense-description').style.display='none';
+   });
+   document.getElementById('edit-detail').addEventListener('click',()=>{
+       document.getElementById('exp-desc-name').removeAttribute('disabled');
+       document.getElementById('exp-desc-amount').removeAttribute('disabled');
+       document.getElementById('exp-desc-description').removeAttribute('disabled');
+   });
+   document.getElementById('del-detail').addEventListener('click',()=>{
+      const name = document.getElementById('exp-desc-name').value;
+      const amount = document.getElementById('exp-desc-amount').value;
+      const desc = document.getElementById('exp-desc-description').value;
+      const category = document.getElementById('detail-category').value;
+      const obj = {name,amount,desc,category};
+      const token = localStorage.getItem('expenseTracker');
+      axios.post(`http://3.111.151.88:3000/home/daily/delete`,obj,{ headers:{"Authorization":token}})
+      .then(res => {
+         document.getElementById('close-detail').click();
+         event.target.parentElement.parentElement.remove();
+         
+    let total = document.getElementById('balance-amount').textContent;
+    let credit = document.getElementById('total-credit-amount').textContent; 
+    let debit = document.getElementById('total-debit-amount').textContent;  
+    if(category == 'credit'){
+       total = +total - amount;
+       credit = +credit - amount;
+    }
+    else{
+       total = +total + +amount;
+       debit = +debit - amount;
+    }
+    document.getElementById('balance-amount').textContent = total;
+    document.getElementById('total-credit-amount').textContent = credit;
+    document.getElementById('total-debit-amount').textContent = debit;  
+         if(res.data.deleted == 'true')
+         alert(`${name} has been deleted`);
+      })
+      .catch(err => console.log(err));
+   });
+}
   

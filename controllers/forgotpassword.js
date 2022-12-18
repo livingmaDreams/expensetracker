@@ -35,7 +35,7 @@ try{
   from: 'deepi.sakthivel@outlook.com',
   subject: 'Reset Password Link',
   text: 'Click on this link to reset a password',
-  html: `<a href='http://3.111.42.108:3000/forgotpassword/${id}'>Reset Password Link</a>`
+  html: `<a href='http://3.111.151.88:3000/forgotpassword/${id}'>Reset Password Link</a>`
 }
 await sgMail.send(msg);
 

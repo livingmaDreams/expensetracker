@@ -10,7 +10,8 @@
 <body>
     <header>
         <div class="home-header">Day to Day Expenses</div>
-        <button id="premium">Premium</button>
+        <button id="premium" style="left:75%;">Premium</button>
+        <button id="logout">Logout</button>
         <ul class="home-header list">
             <li class="expenselist"><a id="daily-expense-link">Daily</a></li>
             <li class="expenselist"><a id="monthly-expense-link">Monthly</a></li>
@@ -31,7 +32,7 @@
         </div>
         
         <div class="balance">BALANCE<span>₹<span id="balance-amount">0.00</span></span></div>
-        <div class="credit-debit">
+        <div class="credit-debit" id="credit-debit">
             <div class="credit" id="credit">
               <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-credit-amount">0.00</span></span></div> 
             </div>
@@ -46,7 +47,7 @@
             <input type="number" id="rows-per-page" step="5" min="5" placeholder="5"> 
         </div>  
         </div>
-       
+        <div id="expense-description"></div>
     </form>
   
 

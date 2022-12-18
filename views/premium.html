@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="home-header">Day to Day Expenses</div>
-        <button id="premium">Premium</button>
+        <button id="logout">Logout</button>
         <a id="darkmode">&#127769;</a>
         <ul class="home-header list">
             <li class="expenselist"><a id="daily-expense-link">Daily</a></li>
@@ -20,19 +20,19 @@
     </header>
     <form class="form-homepage" id="form-homepage">
         <div class="input-expense">
-        <input type="text" name="name" id="name" placeholder="Name">
-        <input type="text" name="amount" id="amount" placeholder="Amount">
-        <input type="text" name="description" id="description" placeholder="Description">
-        <select name="category" id="category" style="color:grey">
-            <option value="title">Category</option>
-            <option value="credit">Credit</option>
-            <option value="debit">Debit</option>
-        </select>
-        <button id="input-submit">SUBMIT</button>
-        </div>
+            <input type="text" name="name" id="name" placeholder="Name">
+            <input type="text" name="amount" id="amount" placeholder="Amount">
+            <input type="text" name="description" id="description" placeholder="Description">
+            <select name="category" id="category" style="color:grey">
+                <option value="title">Category</option>
+                <option value="credit">Credit</option>
+                <option value="debit">Debit</option>
+            </select>
+            <button id="input-submit">SUBMIT</button>
+            </div>
         
         <div class="balance">BALANCE<span>₹<span id="balance-amount">0.00</span></span></div>
-        <div class="credit-debit">
+        <div class="credit-debit" id="credit-debit">
             <div class="credit" id="credit">
               <div class="heading"><span>Total Income(Credit)</span><span>₹<span id="total-credit-amount">0.00</span></span></div> 
             </div>
@@ -57,6 +57,7 @@
       </table>
    <div id="'leadership-details'"></div>
    <div id="download-tab" class="download-tab"></div>
+   <div id="expense-description"></div>
 </body>
 <script src="/js/premium.js"></script>
 <script src="/js/main.js"></script>
