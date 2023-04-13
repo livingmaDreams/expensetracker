@@ -31,11 +31,11 @@ try{
     .catch(err => console.log(err));
   },120000);
  const msg = {
-  to: 'sdeepicivil@gmail.com', 
+  to: mail, 
   from: 'deepi.sakthivel@outlook.com',
   subject: 'Reset Password Link',
   text: 'Click on this link to reset a password',
-  html: `<a href='http://3.111.151.88:3000/forgotpassword/${id}'>Reset Password Link</a>`
+  html: `<a href='http://13.210.128.234:3000/forgotpassword/${id}'>Reset Password Link</a>`
 }
 await sgMail.send(msg);
 

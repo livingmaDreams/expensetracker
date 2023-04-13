@@ -163,6 +163,7 @@ exports.delExpense = (req,res,next) =>{
     const amount = req.body.amount;
     const desc = req.body.desc;
     const category = req.body.category;
+
      req.user
      .getExpenses({where:{name:name,amount:amount,description:desc,category:category}})
      .then(exp => {
