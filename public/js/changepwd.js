@@ -15,8 +15,8 @@ function changePassword(event){
   }
   else{
      const obj ={pwd,id};
-     axios.post('http://3.111.151.88:3000/forgotpassword/resetpassword',obj)
-     .then(res => window.location.href='http://3.111.151.88:3000/login')
+     axios.post('http://13.210.128.234:3000/forgotpassword/resetpassword',obj)
+     .then(res => window.location.href='http://13.210.128.234:3000/login')
      .catch(err => console.log(err));
   }
 }

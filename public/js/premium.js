@@ -6,7 +6,7 @@ function premiumPage(){
     getDailyExpenses(page);
     const perPage = localStorage.getItem('expenseTrackerperPage');
     document.getElementById('rows-per-page').value = perPage;
-    axios.get('http://3.111.151.88:3000/home/leadership')
+    axios.get('http://13.210.128.234:3000/home/leadership')
     .then(res =>{
        leadershipBoard(res.data.leadership);
     })
@@ -74,7 +74,7 @@ function dailyExpenses(event){
 
   const obj ={name,amount,description,category};
 
-  axios.post(`http://3.111.151.88:3000/home/daily`,obj,{ headers:{"Authorization":token}})
+  axios.post(`http://13.210.128.234:3000/home/daily`,obj,{ headers:{"Authorization":token}})
   .then(res => {
      expenseList(res.data.newexpense)
      event.target.name.value = '';
@@ -110,7 +110,7 @@ function getDailyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0;  
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://3.111.151.88:3000/home/daily/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://13.210.128.234:3000/home/daily/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -143,7 +143,7 @@ function getMonthlyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0; 
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://3.111.151.88:3000/home/monthly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://13.210.128.234:3000/home/monthly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -176,7 +176,7 @@ function getYearlyExpenses(page){
   document.getElementById('total-debit-amount').textContent = 0; 
   const token = localStorage.getItem('expenseTracker');
   const perPage = localStorage.getItem('expenseTrackerperPage');
-  axios.get(`http://3.111.151.88:3000/home/yearly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
+  axios.get(`http://13.210.128.234:3000/home/yearly/${page}?perPage=${perPage}`,{ headers:{"Authorization":token}})
   .then(res =>{
      let totalPage = res.data.totalpages;
      if(totalPage != 0){
@@ -254,7 +254,7 @@ document.getElementById('logout').addEventListener('click',logout);
 
 function logout(){
    localStorage.setItem('expenseTracker','');
-   window.location.href="http://3.111.151.88:3000/login";
+   window.location.href="http://13.210.128.234:3000/login";
 }
 
 document.getElementById('credit-debit').addEventListener('click',expenseDetail);
@@ -310,7 +310,7 @@ function expenseDetailTab(event){
       const category = document.getElementById('detail-category').value;
       const obj = {name,amount,desc,category};
       const token = localStorage.getItem('expenseTracker');
-      axios.post(`http://3.111.151.88:3000/home/daily/delete`,obj,{ headers:{"Authorization":token}})
+      axios.post(`http://13.210.128.234:3000/home/daily/delete`,obj,{ headers:{"Authorization":token}})
       .then(res => {
          document.getElementById('close-detail').click();
          event.target.parentElement.parentElement.remove();
