@@ -1,7 +1,10 @@
 
 document.getElementById('form-loginpage').addEventListener('submit',login);
 
+
 async function login(event){
+  event.preventDefault();
+
    const mail = event.target.mail.value;
    const password = event.target.password.value;
    const error = document.getElementById('error')
@@ -39,9 +42,42 @@ async function login(event){
       setTimeout(()=>{
        error.style.display = 'none';
       },2000);
+    
 }
+
+// async function googlelogin(event){
+//   event.preventDefault();
+//   try{
+//     const res = await axios.get('http://13.210.128.234:3000/login/auth');
+//       const token = res.data.token;
+//       const premiumUser = res.data.premium;
+//        if(res.status == 200){ 
+//          localStorage.setItem('expenseTracker',token);
+//          perPage(5);
+//          if(premiumUser == 'false')
+//         window.location.href = 'http://13.210.128.234:3000/home';
+//         else
+//         window.location.href='http://13.210.128.234:3000/premium';
+//        }
+//      }
+//     catch(err){
+//       if(err.response.status == 404){
+//          error.value="*User not found*"
+//          error.style.display = 'block';
+//         }
+//         if(err.response.status == 500){
+//          error.value="*Something went wrong*"
+//          error.style.display = 'block';
+//         } 
+//       };
+//        setTimeout(()=>{
+//         error.style.display = 'none';
+//        },2000);
+
+// }
 
 function perPage(data){
   localStorage.setItem('expenseTrackerperPage',data);
   location.reload();
 }
+

@@ -189,50 +189,52 @@ function getYearlyExpenses(page){
 }
 
 function expenseList(data){      
-    const name = data.name;
-    const category = data.category;
-    const description = data.description;
-    const amount = data.amount;
-    let parEle;
+   const name = data.name;
+   const category = data.category;
+   const description = data.description;
+   const amount = data.amount;
+   const id = data.id;
+   let parEle;
+  
+ 
+   let total = document.getElementById('balance-amount').textContent;
+   let credit = document.getElementById('total-credit-amount').textContent; 
+   let debit = document.getElementById('total-debit-amount').textContent;  
+   if(data.category == 'credit'){
+      total = +total + data.amount;
+      credit = +credit + data.amount;
+   }
+   else{
+      total = +total - data.amount;
+      debit = +debit + data.amount;
+   }
    
-  
-    let total = document.getElementById('balance-amount').textContent;
-    let credit = document.getElementById('total-credit-amount').textContent; 
-    let debit = document.getElementById('total-debit-amount').textContent;  
-    if(data.category == 'credit'){
-       total = +total + data.amount;
-       credit = +credit + data.amount;
-    }
-    else{
-       total = +total - data.amount;
-       debit = +debit + data.amount;
-    }
-    
-    document.getElementById('balance-amount').textContent = total.toFixed(2);
-    document.getElementById('total-credit-amount').textContent = credit;
-    document.getElementById('total-debit-amount').textContent = debit;  
-  
-    const divEle = document.createElement('div');
-    divEle.className='data-list';
-    
-    divEle.innerHTML = `<div class="data"><span><a id="expense-list-name">${name}</a></span><span>₹<span id="amount">${amount}</span></span>
-     </div>
-     <div class="description">${description}</div>
-    <div class="category">${category}</div>`;
-    if(category == 'credit'){
-    parEle = document.getElementById('credit');
-    divEle.id = `data-credit-${name}`;
-    }
-    else{
-    parEle = document.getElementById('debit');
-    divEle.id = `data-debit-${name}`;
-    }
-    
-    parEle.appendChild(divEle); 
-  
-    
-  }
-
+   document.getElementById('balance-amount').textContent = total.toFixed(2);
+   document.getElementById('total-credit-amount').textContent = credit;
+   document.getElementById('total-debit-amount').textContent = debit;  
+ 
+   const divEle = document.createElement('div');
+   divEle.className='data-list';
+   
+   divEle.innerHTML = `<div class="data"><span><a id="expense-list-name">${name}</a></span><span>₹<span id="amount">${amount}</span></span>
+   <span class="id" hidden>${id}</span>
+   </div>
+    <div class="description">${description}</div>
+   <div class="category">${category}</div>
+   `;
+   if(category == 'credit'){
+   parEle = document.getElementById('credit');
+   divEle.id = `data-credit-${name}`;
+   }
+   else{
+   parEle = document.getElementById('debit');
+   divEle.id = `data-debit-${name}`;
+   }
+   
+   parEle.appendChild(divEle); 
+ 
+   
+ }
 //PAGINATION
 document.getElementById('pagination').addEventListener('click', (event)=>{
     if(event.target.id == 'daily-expense-pagination')
@@ -258,11 +260,13 @@ function expenseDetail(event){
       const amount = event.target.parentElement.nextElementSibling.firstElementChild.textContent;
       const desc = event.target.parentElement.parentElement.nextElementSibling.textContent;
       const category = event.target.parentElement.parentElement.nextElementSibling.nextElementSibling.textContent;
+      const id = event.target.parentElement.nextElementSibling.nextElementSibling.textContent;
       document.getElementById('expense-description').style.display= 'flex';
       const div = document.getElementById('expense-description');
       div.innerHTML = `
       <h4>Expense Detail</h4>
       <label for="name">Name</label>
+      <input type="text" name="id" id="exp-desc-id" value=${id} hidden disabled>
       <input type="text" name="name" id="exp-desc-name" value=${name} disabled>
       <label for="name">Amount</label>
       <input type="text" name="amount" id="exp-desc-amount" value=${amount} disabled>
@@ -275,7 +279,6 @@ function expenseDetail(event){
           <option value="debit">Debit</option>
       </select>
       <div id="expense-detail-button">
-      <button id="edit-detail">EDIT</button>
       <button id="del-detail">DELETE</button>
       <button id="close-detail">Close</button>
       </div>`;
@@ -288,19 +291,12 @@ function expenseDetail(event){
 
 
 function expenseDetailTab(event){
-   document.getElementById('close-detail').addEventListener('click' ,(et) => {
-        et.preventDefault();
+   document.getElementById('close-detail').addEventListener('click' ,() => {
       document.getElementById('expense-description').style.display='none';
    });
-   document.getElementById('edit-detail').addEventListener('click',(et)=>{
-      et.preventDefault();
-      console.log(document.getElementById('exp-desc-name'))
-       document.getElementById('exp-desc-name').removeAttribute('disabled');
-       document.getElementById('exp-desc-amount').removeAttribute('disabled');
-       document.getElementById('exp-desc-description').removeAttribute('disabled');
-   });
-   document.getElementById('del-detail').addEventListener('click',(et)=>{
-      et.preventDefault();
+   
+
+   document.getElementById('del-detail').addEventListener('click',()=>{
       const name = document.getElementById('exp-desc-name').value;
       const amount = document.getElementById('exp-desc-amount').value;
       const desc = document.getElementById('exp-desc-description').value;
@@ -332,4 +328,5 @@ function expenseDetailTab(event){
       .catch(err => console.log(err));
    });
 }
+  
   

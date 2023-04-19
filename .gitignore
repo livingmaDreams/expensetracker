@@ -2,3 +2,5 @@ node_modules
 server.cert
 server.key
 .env
+auth.js
+

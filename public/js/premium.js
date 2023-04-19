@@ -200,6 +200,7 @@ function expenseList(data){
     const category = data.category;
     const description = data.description;
     const amount = data.amount;
+    const id = data.id;
     let parEle;
    
   
@@ -223,9 +224,11 @@ function expenseList(data){
     divEle.className='data-list';
     
     divEle.innerHTML = `<div class="data"><span><a id="expense-list-name">${name}</a></span><span>₹<span id="amount">${amount}</span></span>
-     </div>
+    <span class="id" hidden>${id}</span>
+    </div>
      <div class="description">${description}</div>
-    <div class="category">${category}</div>`;
+    <div class="category">${category}</div>
+    `;
     if(category == 'credit'){
     parEle = document.getElementById('credit');
     divEle.id = `data-credit-${name}`;
@@ -265,11 +268,13 @@ function expenseDetail(event){
       const amount = event.target.parentElement.nextElementSibling.firstElementChild.textContent;
       const desc = event.target.parentElement.parentElement.nextElementSibling.textContent;
       const category = event.target.parentElement.parentElement.nextElementSibling.nextElementSibling.textContent;
+      const id = event.target.parentElement.nextElementSibling.nextElementSibling.textContent;
       document.getElementById('expense-description').style.display= 'flex';
       const div = document.getElementById('expense-description');
       div.innerHTML = `
       <h4>Expense Detail</h4>
       <label for="name">Name</label>
+      <input type="text" name="id" id="exp-desc-id" value=${id} hidden disabled>
       <input type="text" name="name" id="exp-desc-name" value=${name} disabled>
       <label for="name">Amount</label>
       <input type="text" name="amount" id="exp-desc-amount" value=${amount} disabled>
@@ -301,8 +306,29 @@ function expenseDetailTab(event){
    document.getElementById('edit-detail').addEventListener('click',()=>{
        document.getElementById('exp-desc-name').removeAttribute('disabled');
        document.getElementById('exp-desc-amount').removeAttribute('disabled');
-       document.getElementById('exp-desc-description').removeAttribute('disabled');
+       document.getElementById('exp-desc-description').removeAttribute('disabled'); 
+       document.getElementById('edit-detail').id='save-detail';  
+       document.getElementById('save-detail').innerHTML='SAVE'; 
+       document.getElementById('save-detail').addEventListener('click',()=>{
+         const id =  document.getElementById('exp-desc-id').value;
+         const name =  document.getElementById('exp-desc-name').value;
+        const amount =  document.getElementById('exp-desc-amount').value;
+          const description = document.getElementById('exp-desc-description').value;
+          const category = document.getElementById('detail-category').value;
+          const token = localStorage.getItem('expenseTracker');
+
+  const obj ={id,name,amount,description,category};
+
+  axios.post(`http://13.210.128.234:3000/home/daily/edit`,obj,{ headers:{"Authorization":token}})
+  .then(res => {
+   document.getElementById('expense-description').style.display='none';
+    location.reload();
+  })
+  .catch(err => console.log(err));
+      });  
    });
+   
+
    document.getElementById('del-detail').addEventListener('click',()=>{
       const name = document.getElementById('exp-desc-name').value;
       const amount = document.getElementById('exp-desc-amount').value;

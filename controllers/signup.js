@@ -1,4 +1,5 @@
 const User = require('../models/users.js');
+const Expense = require('../models/expenses.js');
 
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -68,6 +69,8 @@ exports.loginUser = async (req,res,next) =>{
         res.status(404).json({status:'usernotfound'})
     }
 }
+
+
 
 exports.getHomePage = (req,res,next) =>{  
     res.sendFile(path.join(__dirname,`../views/home.html`)); 
@@ -157,6 +160,21 @@ req.user
     })
 .catch(err => console.log(err));  
 }
+
+exports.editExpenses = async (req,res,next) =>{
+    const name = req.body.name;
+    const amount = req.body.amount;
+    const desc = req.body.description;
+    const category = req.body.category;
+    const id = req.body.id;
+    try{
+    const exp =  await Expense.findOne({where:{id:id,userId:req.user.id}})
+    await exp.update({name:name,amount:amount,description:desc,category:category});
+      res.status(200).json({edited:'true'})
+    }catch(err){
+        res.status(404).json({edited:'false'})
+    };
+ }
 
 exports.delExpense = (req,res,next) =>{
     const name = req.body.name;

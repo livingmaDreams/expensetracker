@@ -24,7 +24,6 @@ function uploadToS3(data,filename){
     });
   
    
-
     var params = {
       Bucket: BUCKET_NAME,
       Key:filename,
@@ -34,10 +33,15 @@ function uploadToS3(data,filename){
 
     return new Promise((res,rej) =>{
         s3Bucket.upload(params,(err,s3res) =>{
-            if(err)
-            rej(err)
-            else
-            res(s3res.Location);
+            if(err){
+                console.log(err)
+                rej(err)
+            }
+            
+            else{ 
+                res(s3res.Location);
+            }
+            
         });
     })
  
@@ -47,8 +51,10 @@ exports.createLink = async (req,res,next) =>{
     const exp = await req.user.getExpenses();
     const jsonExp = JSON.stringify(exp);
     const userId = req.user.id;
+   
     const filename = `expense${userId}/${new Date()}.txt`;
     const fileUrl = await uploadToS3(jsonExp,filename);
+    console.log(fileUrl)
      await req.user.createDownload({link:fileUrl});
      res.status(200).json({url: fileUrl,status:'success'});
     }

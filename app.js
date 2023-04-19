@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const https = require('https');
 
+
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
@@ -17,7 +19,9 @@ const accessLogStream = fs.createWriteStream(
     {flags: 'a'});
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use(cors());
+app.use(cors({
+    credentials: true
+  }));
 
 app.use(morgan('combined',{stream: accessLogStream}));
 
