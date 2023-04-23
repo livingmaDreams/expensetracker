@@ -386,7 +386,7 @@ table > *{
     margin-top: 1.5vh;
 }
 
-#del-detail:hover,#edit-detail:hover,#close-detail:hover,#save-detail{
+#del-detail:hover,#edit-detail:hover,#close-detail:hover,#save-detail:hover{
     background-color: white;
     color: aquamarine;
     border: 1px solid aquamarine;

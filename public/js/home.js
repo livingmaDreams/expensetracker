@@ -279,6 +279,7 @@ function expenseDetail(event){
           <option value="debit">Debit</option>
       </select>
       <div id="expense-detail-button">
+      <button id="edit-detail">EDIT</button>
       <button id="del-detail">DELETE</button>
       <button id="close-detail">Close</button>
       </div>`;
@@ -293,6 +294,30 @@ function expenseDetail(event){
 function expenseDetailTab(event){
    document.getElementById('close-detail').addEventListener('click' ,() => {
       document.getElementById('expense-description').style.display='none';
+   });
+   document.getElementById('edit-detail').addEventListener('click',()=>{
+       document.getElementById('exp-desc-name').removeAttribute('disabled');
+       document.getElementById('exp-desc-amount').removeAttribute('disabled');
+       document.getElementById('exp-desc-description').removeAttribute('disabled'); 
+       document.getElementById('edit-detail').id='save-detail';  
+       document.getElementById('save-detail').innerHTML='SAVE'; 
+       document.getElementById('save-detail').addEventListener('click',()=>{
+         const id =  document.getElementById('exp-desc-id').value;
+         const name =  document.getElementById('exp-desc-name').value;
+        const amount =  document.getElementById('exp-desc-amount').value;
+          const description = document.getElementById('exp-desc-description').value;
+          const category = document.getElementById('detail-category').value;
+          const token = localStorage.getItem('expenseTracker');
+
+  const obj ={id,name,amount,description,category};
+
+  axios.post(`http://13.210.128.234:3000/home/daily/edit`,obj,{ headers:{"Authorization":token}})
+  .then(res => {
+   document.getElementById('expense-description').style.display='none';
+    location.reload();
+  })
+  .catch(err => console.log(err));
+      });  
    });
    
 
